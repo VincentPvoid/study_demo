@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1_restapi</title>
+</head>
+<body>
+  <button onclick="testGet()">GET请求</button>
+  <button onclick="testPost()">POST请求</button>
+  <button onclick="testPut()">PUT请求</button>
+  <button onclick="testDelete()">DELETE请求</button>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script>
+    function testGet(){
+      // axios.get('http://localhost:3000/posts')
+      //query参数；返回值为数组（类似filter）
+      // axios.get('http://localhost:3000/posts?id=1') 
+      // params参数；返回值为对象（类似find）
+      axios.get('http://localhost:3000/posts/1') 
+      .then(response => {
+        console.log('/post get',response.data)
+      })
+    }
+
+    function testPost(){
+      axios.post('http://localhost:3000/posts',  { "title": "dreams", "author": "doll" }) 
+      .then(response => {
+        console.log('/post post',response.data)
+      })
+    }
+
+    function testPut(){
+      axios.put('http://localhost:3000/posts/3',  { "title": "dreams end", "author": "doll2" }) 
+      .then(response => {
+        console.log('/post put',response.data)
+      })
+    }
+
+    function testDelete(){
+      axios.delete('http://localhost:3000/posts/3') 
+      .then(response => {
+        console.log('/post post',response.data)
+      })
+    }
+
+  </script>
+</body>
+</html>

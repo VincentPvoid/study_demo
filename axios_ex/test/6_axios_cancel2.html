@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6_axios_cancel</title>
+</head>
+
+<body>
+  <button onclick="testGet1()">request 1</button> <br>
+  <button onclick="testGet2()">request 2</button> <br>
+  <button onclick="cancelRequest()">cancel request</button>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script>
+    axios.defaults.baseURL = 'http://localhost:4000';
+    let cancel = null; // 用于保存取消请求的函数
+
+    function testGet1() {
+      // 在准备发请求前, 取消未完成的请求
+      if (typeof cancel === 'function') {
+        cancel('强制取消请求')
+        cancel = null
+      }
+
+      axios({
+        url: '/products1',
+        cancelToken: new axios.CancelToken(function executor(c) { // c是用于取消当前请求的函数
+          // 保存取消函数, 用于之后可能需要取消当前请求
+          cancel = c
+        }),
+      })
+        .then(
+          response => {
+            console.log('请求1成功了', response.data)
+            cancel = null;
+          },
+          error => {
+            if (axios.isCancel(error)) {
+              console.log('取消请求1')
+            } else { // 请求出错了
+              cancel = null;
+              console.log('请求1失败了', error.message)
+            }
+          }
+        )
+    }
+
+    function testGet2() {
+      if (typeof cancel === 'function') {
+        cancel('强制取消请求')
+        cancel = null
+      }
+      axios({
+        url: '/products2',
+        cancelToken: new axios.CancelToken(c => {
+          cancel = c;
+        }),
+      })
+        .then(
+          response => {
+            console.log('请求2成功了', response.data)
+          },
+          error => {
+            if (axios.isCancel(error)) {
+              console.log('取消请求2')
+            } else {
+              cancel = null;
+              console.log('请求2失败了', error.message)
+            }
+          }
+        )
+    }
+
+    function cancelRequest() {
+      if (typeof cancel === 'function') {
+        cancel('强制取消请求')
+      } else {
+        console.log('没有可取消的请求')
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>

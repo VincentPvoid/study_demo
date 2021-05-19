@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3_axios_base</title>
+</head>
+
+<body>
+  <button onclick="testGet()">GET请求</button>
+  <button onclick="testPost()">POST请求</button>
+  <button onclick="testPut()">PUT请求</button>
+  <button onclick="testDelete()">DELETE请求</button>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script>
+    // 指定默认配置
+    axios.defaults.baseURL = 'http://localhost:3000'
+
+    // 1. GET请求: 从服务器端获取数据
+    function testGet() {
+      axios({
+        url: '/posts',
+        params: { test: 111, name: 222 }
+      })
+        .then(
+          response => {
+            console.log('/post get', response.data)
+          },
+          error => {
+            console.log(error)
+          }
+        )
+    }
+
+    // 2. POST请求: 向服务器端添加新数据
+    function testPost() {
+      axios({
+        url: '/posts',
+        method:'post',
+        data: { title: "dreams", author: "doll" }
+      })
+        .then(
+          response => {
+            console.log('/post post', response.data)
+          },
+          error => {
+            console.log(error)
+          }
+        )
+    }
+
+    // 3. PUT请求: 更新服务器端已有数据
+    function testPut() {
+      axios({
+        url: '/posts/3',
+        method:'put',
+        data: { title: "hunters dreams", author: "plain doll" }
+      })
+        .then(
+          response => {
+            console.log('/post put', response.data)
+          },
+          error => {
+            console.log(error)
+          }
+        )
+    }
+
+    // 4. DELETE请求: 删除服务器端已有数据
+    function testDelete() {
+      axios({
+        url: '/posts/3',
+        method:'delete',
+      })
+        .then(
+          response => {
+            console.log('/post delete', response.data)
+          },
+          error => {
+            console.log(error)
+          }
+        )
+    }
+
+
+  </script>
+
+</body>
+
+</html>
