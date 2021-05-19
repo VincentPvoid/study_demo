@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>04_promise_base</title>
+</head>
+
+<body>
+  <script>
+    // Promise基本使用
+
+    // 1.创建一个Promise对象
+    const p = new Promise((resolve, reject) => { //执行器函数 同步回调
+      console.log('执行 excutor')
+      // 2.执行异步操作任务
+      setTimeout(() => {
+        const time = Date.now();
+        // 3.1 如果成功了，调用resolve(value)
+        if (time % 2) {
+          resolve('成功的数据，time=' + time);
+        } else{
+          // 3.2 如果失败了，调用reject(reason)
+          reject('失败的数据，time=' + time);
+        }
+      }, 1000)
+    })
+
+    console.log('new Promise()之后')
+
+    p.then(
+      value => { // 接收得到的成功的value数据  onResolved
+        console.log('成功的回调', value);
+      },
+      reason => { // 接收得到的失败的reason数据  onRejected
+        console.log('失败的回调', reason)
+      }
+    )
+    // .then() 和执行器(excutor)同步执行，.then() 中的回调函数异步执行
+
+
+  </script>
+</body>
+
+</html>
