@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3_jQuery_jsonp</title>
+  <script crossorigin="anonymous" src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <style>
+    #res {
+      width: 300px;
+      height: 100px;
+      border: 2px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <button>click</button>
+  <div id="res"></div>
+
+  <script>
+    $('button').eq(0).click(()=>{
+      $.getJSON('http://192.168.3.61:8000/jquery-jsonp-server?callback=?',data=>{
+        console.log(data)
+        $('#res').html(`
+          name:${data.name} <br>
+          hunters:${data.hunters}
+        `)
+      })
+    })
+
+  </script>
+
+
+
+</body>
+
+</html>

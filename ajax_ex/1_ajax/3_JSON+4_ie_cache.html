@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3_JSON+4_ie_cache</title>
+  <style>
+    #res1{
+      width:200px;
+      height:100px;
+      border:2px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <!-- 返回JSON格式数据 -->
+  <div id="res1"></div>
+  <br>
+
+
+  <!-- 解决ie缓存问题 -->
+  <button class="test-ie">click to send get request</button>
+  <div id="res2"></div>
+
+  <script>
+    // 返回JSON格式数据
+    const res1 = document.getElementById('res1')
+    // 绑定键盘按下事件
+    window.onkeydown = function(){
+      const xhr = new XMLHttpRequest();
+      // 设置响应体数据类型；这样获取到的响应数据会自动转换为json类型，不需要手动转换
+      xhr.responseType = 'json'
+      xhr.open('GET', 'http://192.168.3.61:8000/json-server')
+      xhr.send()
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+          if(xhr.status >= 200 && xhr.status < 300){
+            // console.log(xhr.response)
+
+            // 手动进行数据转换
+            // let data = JSON.parse(xhr.response)
+            // res1.innerHTML = data.name
+
+            res1.innerHTML = xhr.response.name;
+          }
+        }
+      }
+    }
+
+
+    // 解决ie缓存问题
+    const res2 = document.getElementById('res2')
+    const btn = document.querySelector('.test-ie')
+    btn.onclick = function(){
+      const xhr = new XMLHttpRequest();
+      // 添加时间戳参数，解决ie缓存问题
+      xhr.open('GET', 'http://192.168.3.61:8000/ie?t='+Date.now())
+      xhr.send()
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+          if(xhr.status >= 200 && xhr.status < 300){
+            res2.innerHTML = xhr.response;
+          }
+        }
+      }
+    }
+
+  </script>
+</body>
+</html>

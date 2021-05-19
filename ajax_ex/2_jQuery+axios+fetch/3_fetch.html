@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3_fetch</title>
+</head>
+<body>
+  <button class="btn">fetch AJAX</button>
+
+  <script>
+    const btn = document.querySelector('.btn')
+
+    btn.onclick = function(){
+      fetch('http://192.168.3.61:8000/fetch-server', {
+        // 请求方法
+        method:'POST',
+        // 请求头
+        headers:{
+          name:'test'
+        },
+        // 请求体
+        body:'username=admain&password=admin'
+      }).then(response => {
+        // return response.text()
+        return response.json()
+      }).then(response => {
+        console.log(response)
+      })
+    }
+
+  </script>
+
+</body>
+</html>

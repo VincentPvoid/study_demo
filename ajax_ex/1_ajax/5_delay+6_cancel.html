@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5_delay+6_cancel</title>
+</head>
+<body>
+  <button class="btn1">click</button>
+  <button class="btn2">cancel request</button>
+  <div id="test1" style="height:30px;width:100px;margin:10px 0;background:#ccc;"></div>
+
+  <script>
+    const btn1 = document.querySelector('.btn1')
+    const btn2 = document.querySelector('.btn2')
+    const test1 = document.getElementById('test1')
+    let xhr = null;
+
+    btn1.onclick = function () {
+      xhr = new XMLHttpRequest()
+
+      // 超时设置 超过2s为超时
+      // xhr.timeout = 2000;
+      // 超时回调
+      xhr.ontimeout = function(){
+        console.log('some problems in network')
+      }
+      // 网络异常回调
+      xhr.onerror = function(){
+        console.log('some error!!')
+      }
+
+      xhr.open('GET', 'http://192.168.3.61:8000/delay')
+      xhr.send()
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          // 判断
+          if (xhr.status >= 200 && xhr.status < 300) {
+            // 处理服务器端返回的结果
+            test1.innerHTML = xhr.response;
+          }
+        }
+      }
+    }
+
+    // 取消请求
+    btn2.onclick = function(){
+      xhr.abort()
+    }
+
+
+  </script>
+
+</body>
+</html>

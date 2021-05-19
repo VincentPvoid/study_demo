@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6_cancel_repeat_request</title>
+</head>
+<body>
+  <button class="btn1">click</button>
+  <div id="test1" style="height:30px;width:100px;margin:10px 0;background:#ccc;"></div>
+
+  <script>
+    const btn1 = document.querySelector('.btn1')
+    const test1 = document.getElementById('test1')
+    let xhr = null;
+    // 标识变量；是否正在发送ajax请求
+    let isSending = false;
+
+    btn1.onclick = function () {
+      if(isSending) xhr.abort(); // 如果正在发送请求，则取消该请求，创建一个新的请求
+      xhr = new XMLHttpRequest()
+      // 修改标识变量
+      isSending = true;
+
+      xhr.open('GET', 'http://192.168.3.61:8000/delay')
+      xhr.send()
+      
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          // 修改标识变量
+          isSending = false;
+          // 判断
+          if (xhr.status >= 200 && xhr.status < 300) {
+            // 处理服务器端返回的结果
+            test1.innerHTML = xhr.response;
+          }
+        }
+      }
+    }
+
+
+
+  </script>
+
+</body>
+</html>
