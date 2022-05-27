@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vue3_Responsive_example</title>
+</head>
+
+<body>
+  <script>
+
+    let hunter = {
+      name: 'Maria',
+      age: 18,
+    }
+
+    // 模拟vue2中实现响应式
+    // #region
+    // let h = {}
+    // Object.defineProperty(h, 'name', {
+    //   configurable: true, // 是否可删除
+    //   get(){ // 读取name时调用
+    //     return hunter.name;
+    //   },
+    //   set(value){ // 修改name时调用
+    //     console.log('name is changed, update view')
+    //     hunter.name = value;
+    //   }
+    // })
+    // Object.defineProperty(h, 'age', {
+    //   // configurable: true, // 是否可删除
+    //   get(){ // 读取age时调用
+    //     return hunter.age;
+    //   },
+    //   set(value){ // 修改age时调用
+    //     console.log('age is changed, view will update')
+    //     hunter.age = value;
+    //   }
+    // })
+    // #endregion
+
+
+    // 模拟vue3中实现响应式
+    //#region 
+    const h = new Proxy(hunter, {
+      // target：当前对象hunter；propName被操作（读取/修改etc）的属性名称
+      get(target, propName){
+        console.log(`read ${propName} on hunter`)
+        // return targer[propName]
+        return Reflect.get(target, propName)
+      },
+      // value修改后的新值
+      set(target, propName, value){
+        console.log(`${propName} is changed, view will update`)
+        // target[propName] = value;
+        Reflect.set(target, propName, value)
+      },
+      deleteProperty(target, propName){
+        console.log(`${propName} is deleted, view will update`)
+        // return delete target[propName]
+        return Reflect.deleteProperty(target, propName)
+      }
+    })
+    //#endregion
+
+
+    let obj = {
+      a: 1,
+      b: 2
+    }
+    // 通过Object.defineProperty操作对象属性
+    // try {
+    //   Object.defineProperty(obj, 'c', {
+    //     get() {
+    //       return 3
+    //     }
+    //   })
+    //   Object.defineProperty(obj, 'c', {
+    //     get() {
+    //       return 4
+    //     }
+    //   })
+    // } catch (error) {
+    //   console.log(error)
+    // }
+
+    // 通过Reflect.defineProperty操作对象属性
+    // const res1 = Reflect.defineProperty(obj, 'c', {
+    //   get() {
+    //     return 3
+    //   }
+    // })
+    // console.log(res1)
+
+    // const res2 = Reflect.defineProperty(obj, 'c', {
+    //   get() {
+    //     return 4
+    //   }
+    // })
+    // console.log(res2)
+    // if(res2){
+    //   console.log('operation success')
+    // }else{
+    //   console.log('operation failed')
+    // }
+
+
+  </script>
+</body>
+
+</html>
