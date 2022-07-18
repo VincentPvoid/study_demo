@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOM-ex3 change Elements5</title>
+    <style>
+        /* 案例：表单全选和全部取消案例 */
+        table {
+            border-collapse: collapse;
+            background: #eee;
+            width: 400px;
+            text-align: center;
+        }
+
+        thead {
+            background: #205AA7;
+            color: #fff;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+        }
+
+        tr {
+            line-height: 2em;
+        }
+
+
+        /* 案例：tab栏切换 */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul::after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+
+        ul li {
+            float: left;
+            padding: 10px 15px;
+        }
+
+        .all-con {
+            margin: 20px 0;
+            border: 1px solid #ccc;
+            background: #eee;
+        }
+
+        .pages-title {
+            border-bottom: 1px solid red;
+        }
+
+        .choose {
+            background: red;
+            color: #fff;
+        }
+
+        .items-con {
+            padding: 20px;
+            height:200px;
+        }
+
+        .items-con .item {
+            display:none;
+            width: 100%;
+        }
+        .items-con .item:first-child{
+            display:block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 案例：表单全选和全部取消案例 -->
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <input class="choose-all" type="checkbox" name="" id="">
+                    </th>
+                    <th>商品</th>
+                    <th>价格</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="" id="">
+                    </td>
+                    <td>iphone8</td>
+                    <td>8000</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="" id="">
+                    </td>
+                    <td>ipad pro</td>
+                    <td>5000</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="" id="">
+                    </td>
+                    <td>ipad air</td>
+                    <td>2000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // 选择全选框
+        var chooseAll = document.querySelector('.choose-all');
+        // 选择其他所有选择框
+        var checkboxs = document.querySelector('tbody').querySelectorAll('[type="checkbox"]');
+
+        var trs = document.querySelector('tbody').querySelectorAll('tr');
+
+        // 表格鼠标悬浮时高亮显示
+        for (var i = 0; i < trs.length; i++) {
+            trs[i].onmouseover = function () {
+                this.style.backgroundColor = '#fff';
+            }
+            trs[i].onmouseout = function () {
+                this.style.backgroundColor = '#eee';
+            }
+        }
+
+        // 全选效果
+        // 其他选择框与全选框的checked值相同
+        chooseAll.onclick = function () {
+            for (var i = 0; i < checkboxs.length; i++) {
+                checkboxs[i].checked = this.checked;
+            }
+        }
+
+        // 其他选择框事件
+
+        // 设置变量统计其他选择框状态是否全为true（不推荐使用这种方法判断，因为效率较低）
+        // for (var i = 0; i < checkboxs.length; i++) {
+        //     checkboxs[i].onclick = function () {
+        //         var count = 0;
+        //         for (var i = 0; i < checkboxs.length; i++) {
+        //             if (checkboxs[i].checked) {
+        //                 count++;
+        //             }
+        //         }
+        //         if (count === checkboxs.length) {
+        //             chooseAll.checked = true;
+        //         } else {
+        //             chooseAll.checked = false;
+        //         }
+        //     }
+        // }
+
+        // 设置一个flag变量进行判断（推荐使用）
+        for (var i = 0; i < checkboxs.length; i++) {
+            checkboxs[i].onclick = function () {
+                var flag = true;
+                for (var i = 0; i < checkboxs.length; i++) {
+                    if (!checkboxs[i].checked) {
+                        flag = false;
+                        break;
+                        // 当有一个选择框不是true时就停止该循环
+                    }
+                }
+                chooseAll.checked = flag;
+            }
+        }
+
+
+    </script>
+
+
+    <!-- 案例：tab栏切换 -->
+    <!-- 当鼠标点击上面响应的选项卡（tab），下面的内容跟随变化 -->
+    <div class="all-con">
+        <ul class="pages-title">
+            <li class="choose">商品介绍</li>
+            <li>规格与包装</li>
+            <li>售后保障</li>
+            <li>商品评价（50000+）</li>
+            <li>手机社区</li>
+        </ul>
+        <div class="items-con">
+            <div class="item">商品介绍模块内容</div>
+            <div class="item">规格与包装模块内容</div>
+            <div class="item">售后保障模块内容</div>
+            <div class="item">商品评价模块内容</div>
+            <div class="item">手机社区模块内容</div>
+        </div>
+    </div>
+
+    <script>
+        var lis = document.querySelector('.pages-title').getElementsByTagName('li');
+        var items = document.querySelector('.items-con').getElementsByClassName('item');
+
+        for (var i = 0; i < lis.length; i++) {
+            // 为上面的5个标签设置自定义属性
+            lis[i].setAttribute('data-index', i);
+            lis[i].onclick = function () {
+                for (var i = 0; i < lis.length; i++) {
+                    lis[i].className = '';
+                }
+                this.className = 'choose';
+                var index = this.getAttribute('data-index');
+                for(var i = 0; i < items.length; i++){
+                    items[i].style.display = 'none';
+                }
+                items[index].style.display = 'block';
+            }
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM-ex10 localstorage2 username</title>
+</head>
+<body>
+    <input type="text" name="" id="username">
+    <label>
+        <input type="checkbox" name="" id="remember">记住用户名
+    </label>
+
+    <script>
+        var iupUserN = document.querySelector('#username');
+        var remember = document.querySelector('#remember');
+        if(localStorage.getItem('username')){
+            iupUserN.value = localStorage.getItem('username');
+            remember.checked = true;
+        }
+        remember.addEventListener('change',function(){
+            if(remember.checked){
+                localStorage.setItem('username',iupUserN.value);
+            }else{
+                localStorage.removeItem('username');
+            }
+        })
+
+    </script>
+
+
+
+</body>
+</html>

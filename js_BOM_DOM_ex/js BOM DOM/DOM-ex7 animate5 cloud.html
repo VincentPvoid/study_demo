@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM-ex7 animate5 cloud</title>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .blue {
+            color: blue;
+        }
+        
+
+        .white {
+            color: #fff;
+        }
+
+        .nav {
+            position: relative;
+            border: 1px solid;
+            font-size: 20px;
+            font-weight:bold;
+        }
+
+        .nav .mask {
+            position: absolute;
+            z-index: -1;
+            width: 5em;
+            height: 100%;
+            background: #f40;
+        }
+
+        .nav ul::after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+
+        .nav ul li {
+            float: left;
+            padding:20px 10px;
+            cursor: pointer;
+        }
+
+
+        /* 方法2 hover效果用css实现 */
+        .blue:hover{
+            color:blue;
+        }
+        ul li:hover{
+            color:#fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="nav">
+        <div class="mask"></div>
+        <ul>
+            <li class="blue">菜单选项</li>
+            <li>文字测试</li>
+            <li>选项选项</li>
+            <li>文字问下</li>
+            <li>个就差你</li>
+            <li>四字成语</li>
+        </ul>
+    </nav>
+
+
+    <script>
+        var lis = document.querySelector('.nav').querySelectorAll('li');
+        var mask = document.querySelector('.mask');
+
+        // 方法1 完全使用JS代码实现所有效果（文字颜色改变也使用JS实现）
+
+        // for (var i = 0; i < lis.length; i++) {
+        //     lis[i].setAttribute('data-index', i);
+        //     var index = 0;
+        //     lis[i].addEventListener('mouseover', function () {
+        //         if (this.className != 'blue') {
+        //             this.className = 'white';
+        //         }
+        //         moveAni(mask, this.offsetLeft);
+        //     });
+        //     lis[i].addEventListener('mouseout', function () {
+        //         if (this.className == 'blue') {
+        //             mask.style.left = this.offsetLeft;
+        //         } else {
+        //             this.className = '';
+        //             moveAni(mask, lis[index].offsetLeft);
+        //         }
+        //     });
+        //     lis[i].addEventListener('click', function () {
+        //         for (var i = 0; i < lis.length; i++) {
+        //             lis[i].className = '';
+        //         }
+        //         this.className = 'blue';
+        //         index = this.getAttribute('data-index');
+        //     });
+        // }
+        
+
+        // 方法2 使用CSS与JS相结合实现效果（hover效果用css实现）
+        var current = 0;
+        for(var i = 0; i<lis.length; i++){
+            lis[i].addEventListener('mouseover',function(){
+                moveAni(mask, this.offsetLeft);
+            });
+            lis[i].addEventListener('mouseout',function(){
+                moveAni(mask, current);
+            });
+            lis[i].addEventListener('click',function(){
+                current = this.offsetLeft;
+                for(var i = 0; i < lis.length; i++){
+                    lis[i].className = '';
+                }
+                this.className = 'blue';
+            });
+        }
+
+
+
+        
+        // 缓动动画函数
+        function moveAni(obj, target, callback) {
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function () {
+                if (obj.offsetLeft == target) {
+                    clearInterval(obj.timer);
+                    callback && callback();
+                } else {
+                    var step = (target - obj.offsetLeft) / 10;
+                    step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                    obj.style.left = obj.offsetLeft + step + 'px';
+                }
+            }, 8)
+        }
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

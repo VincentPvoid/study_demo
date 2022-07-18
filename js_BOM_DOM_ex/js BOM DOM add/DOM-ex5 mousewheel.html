@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM-ex5 mousewheel</title>
+    <style>
+        .red {
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+    <script>
+        // 练习：根据鼠标滚轮滚动变化方块高度
+        window.onload = function () {
+            var red = document.querySelector('.red');
+            red.onmousewheel = function (event) {
+                event = event || window.event;
+                if (event.wheelDelta < 0 || event.detail > 0) {
+                    red.style.height = red.offsetHeight + 10 + 'px';
+                } else {
+                    red.style.height = red.offsetHeight - 10 + 'px';
+                }
+                // 取消滚轮滚动window滚动条移动的默认事件
+                // 火狐取消window滚动默认事件
+                event.preventDefault && event.preventDefault();
+                
+                // 其他浏览器取消window滚动默认事件
+                return false;
+            }
+
+            // 火狐使用这种方法绑定滚轮事件
+            red.addEventListener && red.addEventListener('DOMMouseScroll', red.onmousewheel);
+        }
+    </script>
+</head>
+
+<body style="height:1000px">
+    <div class="red"></div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOX-ex4 node2</title>
+    <style>
+        textarea {
+            resize: none;
+        }
+
+        .text-con {
+            width: 300px;
+        }
+
+        .bbs-con li {
+            margin: 20px 0;
+            background: #eee;
+            white-space: pre;
+            word-break:break-all;
+        }
+        .bbs-con li::after{
+            display:block;
+            content:"";
+            clear:both;
+        }
+
+        .text-con a {
+            float: right;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- 案例：简单版发布留言案例 -->
+    <!-- <div class="text-con">
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <button>发布</button>
+
+        <ul class="bbs-con">
+        </ul>
+    </div>
+
+    <script>
+        var btn = document.querySelector('button');
+        var textarea = document.querySelector('textarea');
+        var ul = document.querySelector('ul');
+        btn.onclick = function () {
+            if (textarea.value != '') {
+                var li = document.createElement('li');
+                li.innerHTML = textarea.value;
+                ul.insertBefore(li, ul.children[0]);
+                textarea.value = '';
+            } else {
+                alert('请输入内容');
+                return false;
+                // 注：我们常用return false来阻止提交表单或者继续执行下面的代码，通俗的来说就是阻止执行默认的行为
+            }
+        }
+
+    </script> -->
+
+
+    <!-- 案例：删除留言案例 -->
+    <!-- tips：阻止链接跳转需要添加javascript:void(0);或者javascript:; -->
+    <div class="text-con">
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <button>发布</button>
+
+        <ul class="bbs-con">
+        </ul>
+    </div>
+
+    <script>
+        var btn = document.querySelector('button');
+        var textarea = document.querySelector('textarea');
+        var ul = document.querySelector('ul');
+        btn.onclick = function () {
+            if (textarea.value != '') {
+                var li = document.createElement('li');
+                // li.innerHTML = textarea.value + '<a href="javascript:;">删除</a>';
+                li.innerHTML = '<span>' + textarea.value + '</span>' + '<a href="javascript:;">删除</a>';
+                var del = li.querySelector('a');
+                ul.insertBefore(li, ul.children[0]);
+                del.onclick = function () {
+                    ul.removeChild(this.parentNode);
+                }
+                textarea.value = '';
+            } else {
+                alert('请输入内容');
+                return false;
+            }
+        }
+
+
+    </script>
+
+
+
+</body>
+
+</html>

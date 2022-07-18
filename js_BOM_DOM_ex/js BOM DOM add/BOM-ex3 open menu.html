@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM-ex3 open menu</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        .menu-con {
+            background: #ddd;
+            width: 11em;
+            margin: 0 auto;
+            padding-bottom: 8px;
+            overflow: hidden;
+            font-size: 14px;
+            border-radius: 8px;
+        }
+
+        .menu-con .menu-title {
+            position: relative;
+            display: block;
+            padding: 3px 25px;
+            background: #333;
+            color: #fff;
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        .menu-con a {
+            display: block;
+            padding: 0 10px;
+            height: 30px;
+            border-bottom: 1px solid #f40;
+            line-height: 30px;
+            color: #f40;
+        }
+
+        .menu-con a:last-child{
+            border:none;
+        }
+        .menu-con a:hover {
+            background: #f40;
+            color: #fff;
+        }
+        div.collapsed {
+            height: 36px;
+            overflow: hidden;
+        }
+
+        .menu-title::before {
+            position: absolute;
+            top: 16px;
+            left: 7px;
+            content: "";
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-left: 10px solid #fff;
+            transform: rotate(90deg);
+            transition:all .2s;
+        }
+
+        .collapsed .menu-title::before {
+            /* display:block; */
+            left: 9px;
+            top: 12px;
+            transform: rotate(0);
+        }
+    </style>
+    <script src="js/tools.js"></script>
+</head>
+
+<body>
+    <!-- 使用collapsed控制菜单开关，效果较好 -->
+    <div class="menu-con">
+        <div>
+            <span class="menu-title">在线工具</span>
+            <a href="#">图像优化</a>
+            <a href="#">收藏夹图标生成器</a>
+            <a href="#">邮件</a>
+            <a href="#">密码</a>
+            <a href="#">文字测试</a>
+        </div>
+        <div class="collapsed">
+            <span class="menu-title">支持我们</span>
+            <a href="#">图像优化</a>
+            <a href="#">邮件</a>
+            <a href="#">文字测试</a>
+        </div>
+        <div class="collapsed">
+            <span class="menu-title">合作伙伴</span>
+            <a href="#">图像优化</a>
+            <a href="#">邮件</a>
+            <a href="#">密码</a>
+            <a href="#">文字测试</a>
+        </div>
+        <div class="collapsed">
+            <span class="menu-title">测试电流</span>
+            <a href="#">图像优化</a>
+            <a href="#">收藏夹图标生成器</a>
+            <a href="#">邮件</a>
+            <a href="#">密码</a>
+            <a href="#">文字测试</a>
+            <a href="#">邮件</a>
+        </div>
+    </div>
+
+    <script>
+        var divs = document.querySelector('.menu-con').querySelectorAll('div');
+        var menuTs = document.querySelectorAll('.menu-title');
+        
+        // 设置一个变量保存当前打开的菜单（即当其他菜单展开时需要折叠的菜单）
+        var openDiv = divs[0];
+        for (var i = 0; i < divs.length; i++) {
+            menuTs[i].addEventListener('click', function () {
+                var thisPar = this.parentNode;
+                // thisPar.classList.toggle('collapsed');
+
+                toggleMenu(thisPar);
+
+                // 检查需要折叠的菜单与被点击的是否是同一个，如果不同则让被打开的菜单折叠
+                // 避免当需要折叠的菜单与被点击的相同时，无法打开该菜单
+                // if (openDiv != thisPar) {
+                //     openDiv.classList.add('collapsed');
+                // }
+                
+
+                // 使用切换类实现add功能：先检查是否有collapsed类名，如果没有再进行切换
+                // 用切换类实现add是为了与上面使用方法一致，方便制作动态效果
+                if (openDiv != thisPar && !openDiv.classList.contains('collapsed')) {
+                    toggleMenu(openDiv);
+                    // openDiv.classList.toggle('collapsed');
+                }
+                openDiv = thisPar;
+            })
+        }
+
+        function toggleMenu(obj){
+            var start = obj.offsetHeight;
+            obj.classList.toggle('collapsed');
+            var end = obj.offsetHeight;
+            obj.style.height = start + 'px';
+            moveLinearSet(obj,'height',end,20,function(){
+                obj.style.height = '';
+            })
+        }
+
+
+    </script>
+</body>
+
+</html>

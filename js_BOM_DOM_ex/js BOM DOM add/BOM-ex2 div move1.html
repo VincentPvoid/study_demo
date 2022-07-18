@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM-ex2 div move1</title>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var box1 = document.querySelector('.box1');
+            var btn800 = document.querySelector('.btn800');
+            var timer = null;
+
+            btn800.onclick = function () {
+                clearInterval(timer);
+                timer = setInterval(function () {
+                    var oldValue = parseInt(getStyle(box1, 'left'));
+                    var newValue = oldValue + 11;
+                    if (newValue >= 800) {
+                        newValue = 800;
+                    }
+                    box1.style.left = newValue + 'px';
+                    if (newValue == 800) {
+                        clearInterval(timer);
+                    }
+                }, 30);
+            }
+
+
+            // 获取元素当前显示样式的兼容性函数
+            function getStyle(obj, sName) {
+                if (window.getComputedStyle) {
+                    return getComputedStyle(obj, null)[sName];
+                } else {
+                    return obj.currentStyle[sName];
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <button class="btn800">点击移动到800px</button>
+    <br><br>
+    <div class="box1" style="position:absolute;left:0; width:100px; height:100px; background:blue;"></div>
+</body>
+
+</html>

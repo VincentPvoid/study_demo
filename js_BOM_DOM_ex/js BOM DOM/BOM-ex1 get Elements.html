@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOM-ex1 get elements</title>
+</head>
+<body>
+
+    <div id="test1">test1</div>
+
+    <ul>
+        <li>11</li>
+        <li>22</li>
+        <li>33</li>
+    </ul>
+
+    <ol>
+        <li>一</li>
+        <li>二</li>
+    </ol>
+
+    <div class="test4">测试1</div>
+    <div class="test4">测试2</div>
+
+
+    <!-- 获取元素 -->
+    <script>
+        // 根据ID获取
+        var test1 = document.getElementById('test1');
+        console.log(test1);
+        console.dir(test1);
+
+        console.log('-----------');
+
+
+        // 根据元素（标签）名获取
+        var test2 = document.getElementsByTagName('li');
+        console.log(test2);
+
+        // 获取某个元素（父元素）内部所有指定标签名的子元素
+        var ols = document.getElementsByTagName('ol');
+        console.log(ols);
+
+        //ols是含有一个ol对象的伪数组，没有指定单个对象，因此不能选中它的子元素，会报错
+        // var test3 = ols.getElementsByTagName('li'); 
+        var test3 = ols[0].getElementsByTagName('li');
+        console.log(test3);
+
+        console.log('-----------');
+
+
+
+        // 通过HTML5新增的方法获取
+        // 1. 根据类名返回元素对象集合（以伪数组形式存储）
+        var test4 = document.getElementsByClassName('test4');
+        console.log(test4);
+
+        // 2. 根据指定选择器返回第一个元素对象，需要写明选择器类型
+        var test4first = document.querySelector('.test4');
+        console.log(test4first);
+
+        // 3. 根据指定选择器返回元素对象集合（以伪数组形式存储），需要写明选择器类型
+        var test4s = document.querySelectorAll('.test4');
+        console.log(test4s);
+
+        console.log('-----------');
+
+
+
+        // 获取特殊元素（body，html）
+        // 返回body元素对象
+        var bodyEle = document.body;
+        console.log(bodyEle);
+        
+        // 返回html元素对象
+        var htmlEle = document.documentElement;
+        console.log(htmlEle);
+
+
+
+
+
+    </script>
+
+
+</body>
+</html>

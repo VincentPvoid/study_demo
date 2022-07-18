@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM ex1 Allchoose</title>
+</head>
+<body>
+    <!-- 全选练习 -->
+    <div class="choose-con1">
+        你爱好的运动是？
+        <label>
+            <input type="checkbox" name="" id="check-all">全选/全不选
+        </label>
+        <div class="list">
+            <label>
+                <input type="checkbox" name="sports" id="soccer">足球
+            </label>
+            <label>
+                <input type="checkbox" name="sports" id="basketball">篮球
+            </label>
+            <label>
+                <input type="checkbox" name="sports" id="flyball">羽毛球
+            </label>
+            <label>
+                <input type="checkbox" name="sports" id="pp">乒乓球
+            </label>
+        </div>
+        <div class="btn-con">
+            <button>全选</button>
+            <button>全不选</button>
+            <button>反选</button>
+            <button>提交</button>
+        </div>
+    </div>
+
+    <script>
+        var checkAll = document.getElementById('check-all');
+        var listInps = document.querySelector('.list').querySelectorAll('input');
+
+        var btnCheck = document.querySelector('.btn-con').children[0];
+        var btnNoCheck = document.querySelector('.btn-con').children[1];
+        var btnReverse = document.querySelector('.btn-con').children[2];
+        var btnSubmit = document.querySelector('.btn-con').children[3];
+
+
+        // 全选/全不选选项
+        checkAll.addEventListener('click',function(){
+            // if(this.checked){
+            //     for(var i = 0; i< listInps.length; i++){
+            //         listInps[i].checked = true;
+            //     }
+            // }else{
+            //     for(var i = 0;i < listInps.length;i++){
+            //         listInps[i].checked = false;
+            //     }
+            // }
+            for(var i = 0; i<listInps.length;i++){
+                listInps[i].checked = this.checked;
+            }
+        })
+
+        // 全选按钮
+        btnCheck.addEventListener('click',function(){
+            // 使用全选/全不选的点击事件
+            // checkAll.checked = false;
+            // checkAll.click();
+
+            // 常规做法
+            for(var i = 0; i< listInps.length;i++){
+                listInps[i].checked = true;
+            }
+            checkAll.checked = true;
+        })
+        // 全不选按钮
+        btnNoCheck.addEventListener('click',function(){
+            checkAll.checked = true;
+            checkAll.click();
+        })
+        // 反选按钮
+        btnReverse.addEventListener('click',function(){
+            var flag = true;
+            for(var i = 0;i<listInps.length;i++){
+                if(listInps[i].checked){
+                    listInps[i].checked = false;
+                    flag = false;
+                }else{
+                    listInps[i].checked = true;
+                }
+            }
+            if(flag){
+                checkAll.checked = true;
+            }else{
+                checkAll.checked = false;
+            }
+        })
+        // 提交按钮
+        btnSubmit.addEventListener('click',function(){
+            for(var i = 0;i<listInps.length;i++){
+                if(listInps[i].checked){
+                    console.log(listInps[i].nextSibling);
+                }
+            }
+        })
+        
+        // 每个选项绑定点击事件
+        for (var i = 0; i < listInps.length; i++) {
+            listInps[i].addEventListener('click', function () {
+                checkAll.checked = true;
+                for (var i = 0; i < listInps.length; i++) {
+                    if (!listInps[i].checked) {
+                        checkAll.checked = false;
+                        break;
+                    }
+                }
+            })
+        }
+
+
+
+
+
+    </script>
+    
+</body>
+</html>

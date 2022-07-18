@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOM-ex3 change Elements3 hw</title>
+    <style>
+        /* 1用户名 显示/隐藏内容（即显示隐藏文本框内容） */
+        input {
+            outline: none;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input:focus {
+            border: 1px solid red;
+        }
+
+        /* 2关闭广告（直接隐藏，即display:none） */
+        .ad-con {
+            position: relative;
+            width: 100%;
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .ad-con img {
+            display: block;
+            width: 100%;
+        }
+
+        .close {
+            position: absolute;
+            right: 0;
+            top: 0;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            padding: 0 10px;
+            font-style: normal;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+
+        /* 3下拉菜单（悬浮显示下拉菜单） */
+        .nav-con {
+            position: relative;
+            border: 1px solid #ccc;
+            width: 100px;
+            height: 30px;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+
+        ul {
+            display: none;
+            position: absolute;
+            top: 30px;
+            left: -1px;
+            border: 1px solid #ccc;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 200px;
+            line-height: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1用户名 显示/隐藏内容（即显示隐藏文本框内容） -->
+    <input type="text" class="username" placeholder="用户名/邮箱">
+    <script>
+        var userName = document.querySelector('.username');
+        userName.onfocus = function () {
+            this.placeholder = '';
+        }
+        userName.onblur = function () {
+            this.placeholder = '用户名/邮箱';
+        }
+    </script>
+
+    <!-- 2关闭广告（直接隐藏，即display:none） -->
+    <div class="ad-con">
+        <a href="#">
+            <img src="./../imgs/BG-mountains.png" alt="">
+        </a>
+        <i class="close">X</i>
+    </div>
+
+    <script>
+        var close = document.querySelector('.close');
+        var adCon = document.querySelector('.ad-con');
+        close.onclick = function () {
+            adCon.style.display = 'none';
+        }
+
+    </script>
+
+
+    <!-- 3下拉菜单（悬浮显示下拉菜单） -->
+    <div class="nav-con">
+        悬浮菜单
+        <ul class="items-con">
+            <li>Lorem.</li>
+            <li>Repudiandae?</li>
+            <li>Quisquam!</li>
+            <li>Tempora.</li>
+            <li>Nemo.</li>
+            <li>Dolorem.</li>
+        </ul>
+    </div>
+
+    <script>
+        var itemsCon = document.querySelector('.items-con');
+        var nav = document.querySelector('.nav-con');
+        nav.onmouseover = function () {
+            itemsCon.style.display = 'block';
+        }
+        nav.onmouseout = function () {
+            itemsCon.style.display = 'none';
+        }
+
+
+    </script>
+
+    <!-- 4开关灯：点击按钮 背景变黑；再次点击变亮 -->
+    <button class="switch">关灯</button>
+
+    <script>
+        var btn = document.querySelector('.switch');
+        var bodyEle = document.body;
+        var flag = 1;
+        btn.onclick = function () {
+            if (flag) {
+                bodyEle.style = 'background:#000';
+                this.innerHTML = '开灯';
+                flag = 0;
+            } else {
+                bodyEle.style = 'background:#fff';
+                this.innerHTML = '关灯';
+                flag = 1;
+            }
+        }
+
+    </script>
+
+
+</body>
+
+</html>

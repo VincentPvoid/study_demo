@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOM-ex6 mouse event</title>
+    <style>
+        /* 禁止选中和右键菜单 */
+        .ban-con{
+            background:#ccc;
+            height:100px;
+            width:200px;
+        }
+
+        /*案例：跟随鼠标的图片 */
+        img{
+            position:absolute;
+            transform:translate(-85%,-85%);
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 禁止选中和右键菜单 -->
+    <div class="ban-con">
+        不能右键和选中的文字
+    </div>
+
+    <script>
+        var banCon = document.querySelector('.ban-con');
+        // 禁止鼠标右键菜单
+        banCon.addEventListener('contextmenu', function(e){
+            e.preventDefault();
+        })
+        // 禁止鼠标选择（selectstart 开始选中）
+        banCon.addEventListener('selectstart', function(e){
+            e.preventDefault();
+        })
+
+    </script>
+
+    
+    <!--案例：跟随鼠标的图片 -->
+    <img src="./../imgs/test1.gif" alt="">
+    
+    <script>
+        var pic = document.querySelector('img');
+        document.addEventListener('mousemove', function(e){
+            // 注意：获取的坐标没有单位，因此要添加单位
+            pic.style.left = e.clientX + 'px';
+            pic.style.top = e.clientY + 'px';
+        })
+    </script>
+
+
+
+</body>
+</html>

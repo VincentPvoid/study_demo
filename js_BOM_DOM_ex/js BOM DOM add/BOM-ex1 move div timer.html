@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM-ex1 move div timer</title>
+    <script>
+        // 练习：使div可以根据不同的方向键向不同的方向移动改进
+        window.onload = function () {
+            var move = document.querySelector('.move');
+            var speed = 10;
+            var dir = 0;
+
+            timer = setInterval(function () {
+                    switch (dir) {
+                        case 38:
+                            move.style.top = move.offsetTop - speed + 'px';
+                            break;
+                        case 40:
+                            move.style.top = move.offsetTop + speed + 'px';
+                            break;
+                        case 37:
+                            move.style.left = move.offsetLeft - speed + 'px';
+                            break;
+                        case 39:
+                            move.style.left = move.offsetLeft + speed + 'px';
+                            break;
+                    }
+                }, 20);
+
+            document.addEventListener('keydown', function (e) {
+                speed = 10;
+                if (e.ctrlKey) {
+                    speed = 100;
+                }
+                dir = e.keyCode;
+                
+            })
+            document.addEventListener('keyup', function () {
+                dir = 0;
+            })
+
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="move" style="width:100px; height:100px; background:red; position:absolute;"></div>
+</body>
+
+</html>

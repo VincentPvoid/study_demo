@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM-ex2 timer</title>
+    <style>
+        /* 案例：5秒后自动关闭的广告 */
+        .ad {
+            display: block;
+            width:200px;
+        }
+
+        /* 案例：倒计时 */
+        .time-con {
+            background: #f40;
+            width: 200px;
+            height: 300px;
+            color: #fff;
+            padding: 10px;
+            margin: 20px 0;
+        }
+
+        .time {
+            list-style: none;
+            padding: 0;
+        }
+
+        .time:after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+
+        ul li {
+            float: left;
+            background: #000;
+            width: 30%;
+            height: 50px;
+            margin: 2px;
+            text-align: center;
+            font-size: 22px;
+            line-height: 50px;
+        }
+
+        li.zero::before {
+            display: inline-block;
+            content: "0";
+        }
+
+        /* 案例：发送短信 */
+        .send{
+            width:8em;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 定时器 -->
+    <!-- 案例：5秒后自动关闭的广告 -->
+    <div class="ad-con">
+        <button class="stop">停止关闭广告图片</button>
+        <img src="./../imgs/album003.jpg" alt="" class="ad">
+    </div>
+
+    <script>
+        var ad = document.querySelector('.ad');
+        var btnStop = document.querySelector('.stop');
+        var timer1 = setTimeout(function () {
+            ad.style.display = 'none';
+        }, 5000);
+        btnStop.addEventListener('click', function () {
+            clearTimeout(timer1);
+        })
+
+    </script>
+
+    <!-- 案例：倒计时 -->
+    <div class="time-con">
+        <span>距离结束还剩</span>
+        <ul class="time">
+            <li>11</li>
+            <li>22</li>
+            <li>33</li>
+        </ul>
+    </div>
+
+    <script>
+        var lis = document.querySelector('.time').getElementsByTagName('li');
+        var endTime = '2020-1-8 11:20:00';
+        // 因为下面的有1秒的延迟，所以先调用一次该函数
+        countDown();
+        // 每隔1秒调用倒计时函数
+        setInterval(countDown, 1000);
+
+        function countDown() {
+            var nowTime = +new Date();
+            endTime = +new Date(endTime);
+            var temp = endTime - nowTime;
+            var day = parseInt(temp / 1000 / 60 / 60 / 24);
+            var hour = parseInt(temp / 1000 / 60 / 60 % 24);
+            var min = parseInt(temp / 1000 / 60 % 60);
+            var sec = parseInt(temp / 1000 % 60);
+            // return day + '天' + hour + '小时' + min + '分' + sec + '秒';
+            hour = hour + day * 24;
+            hour = hour < 10 ? '0' + hour : hour;
+            min = min < 10 ? '0' + min : min;
+            sec = sec < 10 ? '0' + sec : sec;
+            lis[0].innerHTML = hour;
+            lis[1].innerHTML = min;
+            lis[2].innerHTML = sec;
+        }
+
+    </script>
+
+
+    <!-- 案例：发送短信
+    点击按钮后，该按钮5秒内不能再次点击，防止重复发送短信 -->
+    <div class="msg-con">
+        <input type="text" name="" id="" class="number">
+        <button class="send">发送短信</button>
+    </div>
+
+    <script>
+        var btn = document.querySelector('.send');
+        var sec = 5;
+        btn.addEventListener('click', function(){
+            this.disabled = true;
+            this.innerHTML = sec + '秒后重新发送';
+            var timer2 = setInterval(function(){
+                sec--;
+                if(sec == 0){
+                    btn.disabled = false;
+                    sec = 5;
+                    btn.innerHTML = '发送短信';
+                    clearInterval(timer2);
+                }else{
+                    btn.innerHTML = sec + '秒后重新发送'; 
+                }
+            }, 1000)
+        })
+
+    </script>
+
+
+</body>
+
+</html>

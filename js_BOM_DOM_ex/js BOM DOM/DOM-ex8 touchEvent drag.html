@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM-ex8 touchEvent drag</title>
+    <style>
+        .drag {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: #ccc;
+        }
+
+        body {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 移动端拖动元素 -->
+    <div class="drag"></div>
+    <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea dolores enim quasi a error dicta molestias sequi
+        earum. Nostrum earum corporis nam molestias in ipsam expedita eaque voluptatum molestiae maxime voluptatibus
+        reprehenderit suscipit velit tempore quia itaque repudiandae facere, dolore dolores a minus. Quibusdam commodi
+        aliquam quae quos ad dolore?</p>
+    <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad asperiores blanditiis possimus non molestiae
+        reprehenderit natus eum? Aspernatur voluptate, temporibus nemo laudantium voluptatum commodi corporis id
+        exercitationem optio quidem similique provident qui mollitia cum modi vero itaque inventore aliquid, assumenda
+        molestiae expedita, rerum ut! Eaque blanditiis doloremque cumque, autem libero alias ea accusamus minus, rerum
+        vitae ratione numquam mollitia adipisci quam fugiat accusantium iure possimus eligendi laboriosam. Odio optio,
+        saepe aliquam laboriosam doloremque velit non quas quidem voluptate, nam consectetur. Fuga ex impedit corrupti
+        assumenda iste delectus doloremque soluta dicta, enim eum quae nam. Autem beatae corrupti laborum necessitatibus
+        distinctio!</p>
+
+    <script>
+        var drag = document.querySelector('.drag');
+        var dragX = drag.offsetLeft;
+        var dragY = drag.offsetTop;
+        var startX = 0;
+        var startY = 0;
+        drag.addEventListener('touchstart', function (e) {
+            dragX = drag.offsetLeft;
+            dragY = drag.offsetTop;
+            startX = e.targetTouches[0].pageX;
+            startY = e.targetTouches[0].pageY;
+        });
+        drag.addEventListener('touchmove', function (e) {
+            this.style.left = e.targetTouches[0].pageX - startX + dragX + 'px';
+            this.style.top = e.targetTouches[0].pageY - startY + dragY + 'px';
+            // 触摸点移动也会触发屏幕滚动，因此要阻止屏幕滚动的默认事件
+            e.preventDefault();
+        });
+
+
+    </script>
+</body>
+
+</html>

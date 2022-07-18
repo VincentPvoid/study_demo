@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOM-ex3 change Elements2</title>
+    <style>
+        /* 案例：循环精灵图背景 */
+        ul {
+            list-style: none;
+            width: 120px;
+            padding: 0;
+            margin: 10px;
+            overflow: hidden;
+        }
+
+        ul li {
+            float: left;
+            border: 1px solid #ccc;
+            width: 24px;
+            height: 24px;
+            padding: 2px;
+            background: url(./../imgs/TB-icons.png) no-repeat center;
+        }
+
+        /* 案例：显示隐藏文本框内容 */
+        input {
+            outline: none;
+            padding: 5px;
+        }
+
+        .text {
+            color: #aaa;
+        }
+
+
+        /* 案例：密码框格式提示错误信息 */
+        .pwd {
+            margin: 20px 0;
+        }
+
+        .tip {
+            font-size: 12px;
+            color: #000;
+            background:url(./../imgs/TB-icons.png) no-repeat left 5px/24px;
+            padding:10px 0;
+            padding-left:28px;
+        }
+
+        [class*="error"] {
+            color: red;
+            background-position:left -39px;
+        }
+        .right{
+            background-position:left -83px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 案例：循环精灵图背景 -->
+    <!-- 可以利用for循环设置一组元素的精灵图背景 -->
+    <ul class="icons-con">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <script>
+        // 两种做法，效果类似，原理基本相同
+
+        // 移动位置等于索引号乘以44
+        // var lis = document.getElementsByTagName('li');
+        // for (var i = 0; i < lis.length; i++) {
+        //     var temp = i * -44;
+        //     lis[i].style.backgroundPositionY = temp + 'px';
+        // }
+
+
+        // 每张图向上移动44px
+        var lis = document.getElementsByTagName('li');
+        var temp = 3;
+        for (var i = 0; i < lis.length; i++) {
+            lis[i].style.backgroundPositionY = temp + 'px';
+            temp -= 44;
+        }
+    </script>
+
+
+
+    <!-- 案例：显示隐藏文本框内容 -->
+    <!-- 当鼠标点击文本框时，里面的默认文字隐藏；当鼠标离开文本框时，显示文字（onfocus：获得焦点 onblur：失去焦点） -->
+
+    <!-- 简单做法，使用placeholder；但有兼容性问题 -->
+    <input type="text" placeholder="手机" class="search">
+
+    <script>
+        var search = document.querySelector('.search');
+        search.onfocus = function () {
+            this.placeholder = '';
+            this.style.color = '#000';
+        }
+        search.onblur = function () {
+            this.placeholder = '手机';
+            this.style.color = '#aaa';
+        }
+    </script>
+
+    <!-- 京东做法，有小问题 -->
+    <input type="text" class="text" value="手机">
+
+    <script>
+        var text = document.querySelector('.text');
+        text.onfocus = function () {
+            if (this.value === '手机') {
+                this.value = '';
+            }
+            this.style.color = '#000';
+        }
+        text.onblur = function () {
+            if (this.value === '') {
+                this.value = '手机';
+            }
+            this.style.color = '#aaa';
+        }
+    </script>
+
+
+
+    <!-- 案例：密码框格式提示错误信息 -->
+    <!-- 密码框失去焦点时，如果输入密码位数不是6-16位之间，则提示错误信息 -->
+    <div class="pwd-con">
+        <input type="password" class="pwd" maxlength=16>
+        <span class="tip">请输入6-16位字符</span>
+    </div>
+
+    <script>
+        var pwd = document.querySelector('.pwd');
+        var tip = document.querySelector('.tip');
+        pwd.onblur = function () {
+            var len = this.value.length;
+            if (len == 0) {
+                tip.innerHTML = '请输入密码';
+                tip.className = 'tip error';
+            } else if (len < 6) {
+                tip.innerHTML = '密码较短，最短支持6个字符';
+                tip.className = 'tip error';
+            } else {
+                tip.innerHTML = '密码可用';
+                tip.className = 'tip right';
+            }
+        }
+        pwd.onfocus = function () {
+            tip.className = 'tip';
+            tip.innerHTML = '请输入6-16位字符'
+        }
+
+
+    </script>
+
+
+
+
+
+
+</body>
+
+</html>

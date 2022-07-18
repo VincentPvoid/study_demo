@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM-ex4 location obj index</title>
+    <style>
+        .welcome{
+            padding:20px;
+            font-size:18px;
+        }
+        .welcome span{
+            color:red;
+            margin:0 5px;
+        }
+    </style>
+</head>
+<body>
+    首页
+    <div class="welcome">
+        <span></span>欢迎光临
+    </div>
+
+    <script>
+        var welcome = document.querySelector('.welcome').querySelector('span');
+
+        var temp = location.search.substr(1);
+        temp = temp.split('=');
+        welcome.innerHTML = temp[1];
+
+    </script>
+</body>
+</html>

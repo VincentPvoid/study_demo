@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM-ex5 offset2</title>
+    <style>
+        .img-con {
+            position: relative;
+            width: 450px;
+            height: 450px;
+            border: 1px solid #ccc;
+            margin: 0 30px;
+        }
+
+        .img-con .mask {
+            position: absolute;
+            display: none;
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 300px;
+            background: #ff44005b;
+            border: 1px solid #cccccc5b;
+            cursor: move;
+        }
+
+        .img-con .big-con {
+            display: none;
+            position: absolute;
+            top: -1px;
+            left: 452px;
+            width: 600px;
+            height: 600px;
+            border: 1px solid #ccc;
+            overflow: hidden;
+        }
+
+        .big-con .big-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 案例：仿京东放大镜 -->
+    <div class="all-con">
+        <div class="img-con">
+            <img src="./../imgs/phone1.jpg" alt="">
+            <div class="mask"></div>
+            <div class="big-con">
+                <img src="../imgs/phone1big.jpg" alt="" class="big-img">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var imgCon = document.querySelector('.img-con');
+        var mask = document.querySelector('.mask');
+        var bigCon = document.querySelector('.big-con');
+        var bigImg = document.querySelector('.big-img');
+
+        imgCon.addEventListener('mouseover', function () {
+            mask.style.display = 'block';
+            bigCon.style.display = 'block';
+        })
+        imgCon.addEventListener('mouseout', function () {
+            mask.style.display = 'none';
+            bigCon.style.display = 'none';
+        })
+        imgCon.addEventListener('mousemove', function (e) {
+            // 此处要注意该盒子是否有定位父盒子，offsetLeft等值是否准确
+            var x = e.pageX - this.offsetLeft;
+            var y = e.pageY - this.offsetTop;
+            var maskX = x - mask.offsetWidth / 2;
+            var maskY = y - mask.offsetHeight / 2;
+            var MaxX = this.offsetWidth - mask.offsetWidth;
+
+            // 防止mask移动出容器
+            if (maskX <= 0) {
+                maskX = 0;
+            } else if (maskX >= MaxX) {
+                maskX = MaxX;
+            }
+            if (maskY <= 0) {
+                maskY = 0;
+            } else if (maskY >= MaxX) {
+                maskY = MaxX;
+            }
+            mask.style.left = maskX + 'px';
+            mask.style.top = maskY + 'px';
+
+            // 计算大图片的移动距离
+            // 大图片移动距离 = 小图片移动距离/小图片最大移动距离*大图片最大移动距离
+            var bigMaxX = bigImg.offsetWidth - bigCon.offsetWidth;
+            bigImg.style.left = -maskX / MaxX * bigMaxX + 'px';
+            bigImg.style.top = -maskY / MaxX * bigMaxX + 'px';
+
+        })
+
+    </script>
+
+
+</body>
+
+</html>

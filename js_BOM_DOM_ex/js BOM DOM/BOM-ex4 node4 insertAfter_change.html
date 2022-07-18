@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOM-ex4 node4 insertAfter_change</title>
+  <style>
+    [class^="wrap"]{
+      margin:20px;
+      border:1px solid #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 把目标节点插入到某个节点之后 -->
+  <div class="wrap1">
+    <div class="test1">111</div>
+    <div class="test2">222</div>
+  </div>
+  
+  <script>
+    HTMLElement.prototype.insertAfter = function (newNode) {
+      var parentNode = this.parentNode;
+      if (this === parentNode.children[parentNode.children.length - 1]) {
+        parentNode.appendChild(newNode);
+      } else {
+        parentNode.insertBefore(newNode, this.nextElementSibling);
+      }
+    }
+
+    var span = document.createElement('span');
+    span.innerHTML = 'ABC';
+    var test1 = document.querySelector('.test1');
+    test1.insertAfter(span);
+
+  </script>
+
+  <!-- 交换节点位置 双向替换-->
+  <div class="wrap2">
+    <div class="test3">AAA</div>
+    <div class="test4">BBB</div>
+  </div>
+
+  <script>
+    function replaceEach(nodeOne, nodeTwo){
+      var parentOne = nodeOne.parentNode;
+      var parentTwo = nodeTwo.parentNode;
+      var tempNode = null;
+      if(parentOne && parentTwo){
+        tempNode = nodeTwo.cloneNode(true);
+        // 更稳妥的做法是把暂时脱离DOM树的nodeOne保存起来（非必须，因为代码执行速度很快）
+        // var replaceNode = parentOne.replaceChild(tempNode, nodeOne);
+        // parentTwo.replaceChild(replaceNode, nodeTwo);
+
+        parentOne.replaceChild(tempNode, nodeOne);
+        parentTwo.replaceChild(nodeOne, nodeTwo);
+      }
+    }
+    var test3 = document.querySelector('.test3');
+    var test4 = document.querySelector('.test4');
+
+    replaceEach(test3, test4);
+
+  </script>
+
+
+</body>
+
+</html>

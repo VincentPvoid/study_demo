@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM-ex6 scroll</title>
+    <style>
+        body {
+            margin: 0;
+            background: #eee;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .all-con {
+            width: 1280px;
+            margin: 0 auto;
+            /* border:1px solid #ccc; */
+        }
+
+        .search {
+            height: 200px;
+            background: #fff;
+        }
+
+        .nav {
+            background: #f40;
+            color: #fff;
+            line-height: 2;
+        }
+
+        .banner {
+            height: 300px;
+            background: #ccc;
+        }
+
+        .ad {
+            height: 100px;
+            background: #fff;
+        }
+
+        .main {
+            background: #ccc;
+            height: 2000px;
+        }
+
+        .main>div {
+            height: 400px;
+        }
+
+        .main>div:nth-child(2n) {
+            background: lightblue;
+        }
+
+        .aside {
+            position: absolute;
+            top: 336px;
+            right:245px;
+            background: #fff;
+            width:55px;
+            border-radius: 5px;
+            overflow:hidden;
+            font-size:13px;
+        }
+        .aside>a{
+            display:block;
+            padding:15px 10px 0;
+            text-align:center;
+            box-sizing:border-box;
+        }
+        .aside .line:after{
+            display:block;
+            content:"";
+            height:15px;
+            border-bottom:1px solid #ccc;
+        }
+        .aside .choose{
+            background:#f40;
+            color:#fff;
+            padding-bottom:15px;
+        }
+        .aside a:last-child{
+            padding-bottom:15px;
+        }
+        .aside a:nth-child(4){
+            display:none;
+        }
+        .aside a:hover{
+            background:#f40;
+            color:#fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 案例：仿淘宝固定右侧侧边栏 -->
+    <aside class="aside">
+        <a href="#good-item" class="choose" >爱逛好货</a>
+        <a href="#shops-live" class="line">好店直播</a>
+        <a href="#your-love" class="line">猜你喜欢</a>
+        <a href="#top-nav" class="line">回到顶部</a>
+        <a href="#your-love" class="line">反馈</a>
+        <a href="#your-love">帮助服务</a>
+    </aside>
+    <div class="all-con">
+        <nav id="top-nav">顶部导航栏</nav>
+        <div class="search">搜索区</div>
+        <nav class="nav">菜单栏区</nav>
+        <div class="banner">banner区</div>
+        <div class="ad">广告区</div>
+        <div class="main">
+            <div id="good-item">爱逛好货</div>
+            <div id="shops-live">好店直播</div>
+            <div id="your-love">猜你喜欢</div>
+        </div>
+    </div>
+
+    <script>
+        var aside = document.querySelector('.aside');
+        // var main = document.querySelector('.main');
+        var banner = document.querySelector('.banner');
+        var shopsLive = document.getElementById('shops-live');
+        var yourLove = document.getElementById('your-love');
+        var bannerTop = aside.offsetTop - banner.offsetTop;
+
+
+        document.addEventListener('scroll',function(){
+            if(window.pageYOffset > banner.offsetTop){
+                aside.style.position = 'fixed';
+                aside.style.top = bannerTop + 'px';
+            }else{
+                aside.style.position = 'absolute';
+                aside.style.top = '336px';
+            }
+            
+            // 根据位置不同侧边栏显示不同
+            // 方法1 不使用循环
+
+            if(window.pageYOffset < shopsLive.offsetTop){
+                aside.children[0].className = 'choose';
+                aside.children[3].style.display = 'none';
+            }else{
+                aside.children[0].className = 'line';
+                aside.children[3].style.display = 'block';
+            }
+            if(window.pageYOffset >= shopsLive.offsetTop && window.pageYOffset < yourLove.offsetTop){
+                aside.children[1].className = 'choose';
+            }else{
+                aside.children[1].className = 'line';
+            }
+            if(window.pageYOffset >= yourLove.offsetTop){
+                aside.children[2].className = 'choose';
+            }else{
+                aside.children[2].className = 'line';
+            }
+            
+            // 方法2 使用循环（排他思想）
+            // if(window.pageYOffset < shopsLive.offsetTop){
+            //     for(var i = 0; i < 3; i++){
+            //         aside.children[i].className = 'line';
+            //     }
+            //     aside.children[0].className = 'choose';
+            //     aside.children[3].style.display = 'none';
+
+            // }else if(window.pageYOffset <= yourLove.offsetTop){
+            //     for(var i = 0; i < 3; i++){
+            //         aside.children[i].className = 'line';
+            //     }
+            //     aside.children[1].className = 'choose';
+            //     aside.children[3].style.display = 'block';
+            // }else{
+            //     for(var i = 0; i < 3; i++){
+            //         aside.children[i].className = 'line';
+            //     }
+            //     aside.children[2].className = 'choose';
+            //     aside.children[3].style.display = 'block';
+            // }
+
+
+
+        })
+
+
+
+    </script>
+    
+    <!-- <script>
+        var aside = document.querySelector('aside');
+        var backTop = aside.children[3];
+        var allCon = document.querySelector('.all-con');
+        var temp = 0;
+        for(var i = 0; i < 5; i++){
+            temp += allCon.children[i].offsetHeight;
+        }
+        temp += 400
+        document.addEventListener('scroll',function(){
+            var htemp = temp;
+            if(window.scrollY > 236){
+                aside.style.position = 'fixed';
+                aside.style.top = '100px';
+            }else{
+                aside.style.position = 'absolute';
+                aside.style.top = '336px';
+            }
+            if(window.scrollY > 500){
+                backTop.style.display = 'block';
+            }else{
+                backTop.style.display = 'none';
+            }
+            if(window.scrollY >= htemp){
+                aside.children[0].className = 'line';
+            }else{
+                aside.children[0].className = 'choose';
+            }
+            if((window.scrollY >= htemp) && (window.scrollY < htemp + 400)){
+                aside.children[1].className = 'choose';
+            }else{
+                aside.children[1].className = 'line';
+            }
+            if(window.scrollY >= htemp + 400){
+                aside.children[2].className = 'choose';
+            }else{
+                aside.children[2].className = 'line';
+            }
+        })
+       
+
+    </script> -->
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOM-ex3 change elements1</title>
+    <style>
+        /* 案例：仿京东显示密码 */
+        input {
+            width: 220px;
+            height: 30px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            padding-left: 10px;
+            padding-right: 25px;
+            box-sizing: border-box;
+            /* font-size:16px; */
+            line-height:30px;
+        }
+
+        .container {
+            position: relative;
+        }
+
+        .container span {
+            position: absolute;
+            top: 8px;
+            left: 200px;
+            display: inline-block;
+            content: "";
+            width: 15px;
+            height: 15px;
+            background: red;
+        }
+
+        /* 案例：淘宝点击关闭二维码 */
+        .code{
+            position:relative;
+            display:block;
+            margin:0 auto;
+            padding:5px;
+            width:120px;
+            border:1px solid #ccc;
+            text-align:center;
+        }
+        .code img{
+            display:block;
+            width:100%;
+        }
+        .code .close{
+            position:absolute;
+            top:-1px;
+            left:-22px;
+            border:1px solid #ccc;
+            width:20px;
+            height:20px;
+            font-style:normal;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    <!-- <div class="text"></div>
+    <img src="./../imgs/album001.jpg" alt="" title="moring"> -->
+
+    <script>
+        // 案例：分时显示不同图片，显示不同问候语
+        // 根据不同时间，页面显示不同图片，同时显示不同的问候语
+        // 分为上午、下午、晚上三个时段
+        // 当系统时间为12小时制时，功能现实有问题
+        var text = document.querySelector('.text');
+        var img1 = document.querySelector('img');
+
+        var hour = getHour();
+        if (hour <= 12) {
+            text.innerHTML = 'good moring';
+            img1.src = './../imgs/album001.jpg';
+            img1.title = 'moring';
+        } else if (hour <= 19) {
+            text.innerHTML = 'good afternoon';
+            img1.src = './../imgs/album002.jpg';
+            img1.title = 'afternoon';
+        } else {
+            text.innerHTML = 'good evening';
+            img1.src = './../imgs/album003.jpg';
+            img1.title = 'evening';
+        }
+
+
+        // 得到当前时间的函数
+        function getHour() {
+            var obj = new Date();
+            var hour = obj.getHours();
+            return hour;
+        }
+
+    </script>
+
+
+
+
+    <!-- <div class="container">
+        <input class="input" type="password" name="" id="">
+        <span class="change"></span>
+    </div> -->
+
+    <!-- 表单元素的属性操作 -->
+    <script>
+        // 案例：仿京东显示密码
+        // 点击按钮将密码框切换为文本框，并可以查看密码原文
+        var change = document.querySelector('.change');
+        var input = document.querySelector('input');
+        var flag = 1;
+        change.onclick = function(){
+            if(flag){
+                input.type = 'text';
+                this.style = 'background:blue';
+                flag = 0;
+            }else{
+                input.type = 'password';
+                this.style = 'background:red';
+                flag = 1;
+            }
+        }
+
+
+    </script>
+
+
+
+    <!-- 案例：淘宝点击关闭二维码 -->
+    <!-- 当鼠标点击二维码关闭按钮的时候，关闭整个二维码 -->
+    <a href="#" class="code">
+        <i class="close">X</i>
+        <span>文字测试</span>
+        <img src="./../imgs/album001.jpg" alt="">
+    </a>
+
+    <script>
+        var code = document.querySelector('.code');
+        var close = document.querySelector('.close');
+        close.onclick = function(){
+            code.style = 'display:none';
+        }
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>

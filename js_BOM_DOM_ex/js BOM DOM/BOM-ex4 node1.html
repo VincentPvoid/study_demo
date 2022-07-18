@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOX-ex4 node</title>
+    <style>
+        /* 案例：下拉菜单 */
+        a{
+            text-decoration:none;
+            color:#333;
+        }
+        ul {
+            list-style: none;
+            margin: 0;
+            padding:0;
+        }
+        .nav{
+            background:#eee;
+            border-bottom:1px solid #f40;
+            text-align:center;
+            font-size:13px;
+        }
+        .nav::after{
+            display:block;
+            content:"";
+            clear:both;
+        }
+        .nav>li{
+            position:relative;
+            float:left;
+            width:100px;
+        }
+        .nav>li a{
+            display:block;
+            width:100%;
+            line-height:2;  
+        }
+        .nav>li a:hover{
+            background:#ccc;
+            color:#f40;
+        }
+        .sub-con{
+            position:absolute;
+            display:none;
+            border:1px solid #f40;
+            border-bottom:none;
+            width:110%;
+            line-height:2;
+        }
+        .sub-con li{
+            border-bottom:1px solid #f40;
+            padding:0 10px;
+            cursor:pointer;
+        }
+        .sub-con li:hover{
+            background:#f40;
+            color:#fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 案例：下拉菜单 -->
+    <!-- 鼠标悬浮时显示下拉菜单 -->
+    <ul class="nav">
+        <li>
+            <a href="#">微博</a>
+            <ul class="sub-con">
+                <li>私信</li>
+                <li>评论</li>
+                <li>@我</li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">博客</a>
+            <ul class="sub-con">
+                <li>未读提醒</li>
+                <li>博客评论</li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">邮箱</a>
+            <ul class="sub-con">
+                <li>免费邮箱</li>
+                <li>VIP邮箱</li>
+                <li>企业邮箱</li>
+                <li>客户端</li>
+            </ul>
+        </li>
+    </ul>
+
+
+    <script>
+        var lis = document.querySelector('.nav').children;
+        for(var i = 0; i < lis.length; i++){
+            lis[i].onmouseover = function(){
+                this.children[1].style.display = 'block';
+            }
+            lis[i].onmouseout = function(){
+                this.children[1].style.display = 'none';
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

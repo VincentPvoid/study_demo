@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM-ex4 location obj</title>
+</head>
+
+<body>
+    <!-- location对象 -->
+    <!-- 案例：5秒钟之后自动跳转页面 -->
+    <!-- <div class="to-con">
+        5秒后跳转必应
+    </div>
+    
+    <script>
+        var div = document.querySelector('.to-con');
+        var sec = 5;
+        setInterval(turnTo, 1000);
+        function turnTo (){
+            sec--;
+            if(sec == 0){
+                location.href = 'https://cn.bing.com/';
+            }else{
+                div.innerHTML = sec + '秒后跳转必应';   
+            }
+        }
+    </script> -->
+    
+
+    <!-- 案例：获取url参数数据
+    传递登录名数据并跳转页面 -->
+    <div class="login-all">
+        登录页面
+        <!-- 表单中action可以直接写要跳转的页面 -->
+        <form action="./DOM-ex4 location obj index.html">
+            <!-- 注意要提交表单需要数据名 -->
+            用户名：<input type="text" name="username" id="" class="user">
+            <button class="login">登录</button>
+        </form>
+    </div>
+
+
+</body>
+
+</html>

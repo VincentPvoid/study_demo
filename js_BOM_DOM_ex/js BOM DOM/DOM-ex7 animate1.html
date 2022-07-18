@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM-ex7 animate</title>
+    <style>
+        div[class*="test"] {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+        }
+
+        .test1 {
+            top: 100px;
+            background: red;
+        }
+
+        .test2 {
+            background: blue;
+            top: 280px;
+        }
+
+        .test3 {
+            background: #ccc;
+            top: 450px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 简单动画例子 -->
+    <div class="test1"></div>
+    <div class="test2"></div>
+    <div class="test3"></div>
+    <button class="move2">点击开始div2移动200</button>
+    <p>
+        <button class="move3-500">点击开始div3移动500</button>
+        <button class="move3-800">点击开始div3移动800</button>
+    </p>
+
+    <script>
+        var div1 = document.querySelector('.test1');
+        var div2 = document.querySelector('.test2');
+        var div3 = document.querySelector('.test3');
+        var btn1 = document.querySelector('.move2');
+        var btn500 = document.querySelector('.move3-500');
+        var btn800 = document.querySelector('.move3-800');
+
+
+
+        // 简单动画函数封装
+        // function anitest(obj, target){
+        //     var timer = setInterval(function(){
+        //         if(obj.offsetLeft >= target){
+        //             clearInterval(timer);
+        //         }else{
+        //             obj.style.left = obj.offsetLeft + 10 + 'px';
+        //         }
+        //     }, 30)
+        // }
+        // anitest(div1, 300);
+        // anitest(div2, 350);
+
+        // 简单动画函数封装改进 方法1
+        // function anitest2(obj, target) {
+        //     // 判断定时器是否已经开启
+        //     if (obj.timer) {
+        //         return;
+        //     } else {
+        //         obj.timer = setInterval(function () {
+        //             if (obj.offsetLeft >= target) {
+        //                 clearInterval(obj.timer);
+        //             } else {
+        //                 obj.style.left = obj.offsetLeft + 1 + 'px';
+        //             }
+        //         }, 30)
+        //     }
+        // }
+
+        // 简单动画函数封装改进 方法2
+        function anitest3(obj, target) {
+            // 先清除再设置新定时器
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function () {
+                if (obj.offsetLeft >= target) {
+                    clearInterval(obj.timer);
+                } else {
+                    obj.style.left = obj.offsetLeft + 1 + 'px';
+                }
+            }, 30)
+        }
+        // anitest2(div1, 350);
+        // btn1.addEventListener('click', function () {
+        //     anitest2(div2, 500);
+        // })
+        
+        btn1.addEventListener('click', function () {
+            anitest3(div2, 200);
+        })
+        // anitest3(div1, 200);
+
+
+        // 缓动动画函数封装
+        function changeAni(obj, target) {
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function () {
+                if (obj.offsetLeft == target) {
+                    clearInterval(obj.timer);
+                } else {
+                    var step = (target - obj.offsetLeft) / 10;
+                    // 注意step的取整方法
+                    step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                    obj.style.left = obj.offsetLeft + step + 'px';
+                }
+            }, 15)
+        }
+        btn500.addEventListener('click', function () {
+            changeAni(div3, 500);
+        })
+        btn800.addEventListener('click', function(){
+            changeAni(div3, 800);
+        })
+
+
+    </script>
+
+</body>
+
+</html>

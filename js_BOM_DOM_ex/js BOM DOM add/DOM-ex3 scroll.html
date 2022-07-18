@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM-ex3 scroll</title>
+    <style>
+        .protocol-con {
+            border: 1px solid;
+            width: 800px;
+            padding: 30px;
+            margin: auto;
+        }
+
+        .info {
+            width: 500px;
+            height: 600px;
+            padding: 10px;
+            border: 1px solid;
+            margin: 20px auto;
+            overflow: auto;
+            font-size: 18px;
+        }
+
+        .protocol-con form {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 练习：注册协议 -->
+    <div class="protocol-con">
+        <h4>注册条款</h4>
+
+        <p class="info">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas enim vero cupiditate earum nulla at vel
+            reprehenderit laudantium natus id ullam quam dolorum quasi quae, aspernatur illo cum. Placeat dolores
+            voluptatem quia amet vero vel, eveniet asperiores delectus aut quam nulla laudantium quo autem quisquam
+            veniam adipisci corporis animi cum non a temporibus deleniti est. Error odit voluptate velit iste beatae et,
+            ratione possimus. Minus corporis laborum harum enim. Ratione maxime voluptate cum architecto modi sit magnam
+            quis enim quo maiores praesentium nulla necessitatibus quidem, aliquam impedit sequi fugit natus
+            perferendis? Sequi delectus totam vel voluptate magnam praesentium eaque assumenda.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam nam explicabo ducimus minus doloribus
+            similique quo voluptate facilis dolore rerum repudiandae odit quam fugit voluptatem, quas temporibus minima
+            iusto dicta necessitatibus molestias dolores cumque sapiente molestiae eveniet. Minus alias repellendus
+            totam ipsam dolores sunt, possimus laborum aliquam optio esse voluptas expedita quibusdam provident omnis
+            non fugit cupiditate reprehenderit accusamus minima quidem? Totam magni unde obcaecati? Maxime tempora ab
+            vel sunt error possimus commodi voluptatum! Minima cupiditate fugit ipsa, labore quisquam consectetur
+            tempore voluptatibus culpa incidunt vitae mollitia maxime amet eum deserunt, aspernatur numquam molestias
+            natus omnis ullam nesciunt quasi voluptatum temporibus in! Fugit aliquid dolor molestiae repudiandae ut sit
+            culpa quis natus nisi laudantium laboriosam ratione quibusdam eos, a eum corrupti. Ratione sit maiores
+            facere neque placeat enim quibusdam voluptate autem a. Eaque explicabo ex iure veniam repellendus possimus!
+            Deleniti quis pariatur totam voluptate cum perspiciatis doloribus, eos aliquam asperiores neque tempore,
+            veritatis sequi rem libero quo placeat voluptatibus debitis iure tenetur similique unde beatae eligendi? Id
+            consequatur reprehenderit aspernatur magni eos vel enim doloribus officiis odit cumque rerum molestias,
+            aliquam quae iusto earum ipsam, blanditiis soluta voluptate nobis! Repudiandae, quo totam distinctio soluta
+            assumenda neque illo ullam quasi at.
+        </p>
+        <form>
+            <label>
+                <input type="checkbox" name="" id="" disabled>我同意上述条款
+            </label>
+            <button disabled>注册</button>
+        </form>
+    </div>
+
+    <script>
+        var info = document.querySelector('.info');
+        var input = document.querySelector('.protocol-con').querySelector('input');
+        var btn = document.querySelector('.protocol-con').querySelector('button');
+
+        info.addEventListener('scroll',function(){
+            if(info.scrollHeight - info.scrollTop == info.clientHeight){
+            // disabled属性可以设置一个元素是否被禁用；
+            // 如果设置为true，则该元素禁用；如果设置为false，则该元素可用
+                input.disabled = false;
+                btn.disabled = false;
+            }
+        })
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>

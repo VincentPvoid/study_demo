@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM-ex2 getStyle</title>
+    <style>
+        .test1{
+            width:100px;
+            height:100px;
+            background:blue;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="test1"></div>
+    <button>点击获取</button>
+    
+
+    <script>
+        var test1 = document.querySelector('.test1');
+        var btn = document.querySelector('button');
+        // btn.addEventListener('click',function(){
+        //    alert(getStyle(test1,'width'));
+        // })
+        btn.onclick = function(){
+            alert(getStyle(test1,'width'));
+        }
+
+        function getStyle(obj,sName){
+            // 两种方法
+            // 本质上没有区别，但最好优先采用getComputedStyle()方法来获取
+            // if(obj.currentStyle){
+            //     return obj.currentStyle[sName];
+            // }else{
+            //     return getComputedStyle(obj,null)[sName];
+            // }
+
+            if(window.getComputedStyle){
+                return getComputedStyle(obj,null)[sName];
+            }else{
+                return obj.currentStyle[sName];
+            }
+        }
+
+    </script>
+</body>
+</html>

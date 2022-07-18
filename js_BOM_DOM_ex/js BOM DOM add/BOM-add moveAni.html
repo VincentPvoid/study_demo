@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM-add moveAni</title>
+    <style>
+        body{
+            margin:0;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="btn800">点击水平移动到800px</button>
+    <button class="btn500">点击垂直移动到500px</button>
+    <br><br>
+    <div class="box1" style="position:absolute;left:0; width:100px; height:100px; background:blue;"></div>
+
+    <script>
+
+        var box1 = document.querySelector('.box1');
+        var btn800 = document.querySelector('.btn800');
+        var btn500 = document.querySelector('.btn500');
+
+        btn800.addEventListener('click', function () {
+            moveAni(box1, 800, 'left');
+        })
+        btn500.addEventListener('click', function () {
+            moveAni2(box1, 500, 'top');
+        })
+
+        // 不使用offset的方法
+        function moveAni(obj, target, sName) {
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function () {
+                var oldValue = parseInt(getStyle(obj, sName));
+                var step = (target - oldValue) / 10;
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                obj.style[sName] = oldValue + step + 'px';
+                if (oldValue == target) {
+                    clearInterval(obj.timer);
+                }
+            }, 30)
+        }
+
+        // 获取元素当前显示样式的兼容性函数
+        function getStyle(obj, sName) {
+            if (window.getComputedStyle) {
+                return getComputedStyle(obj, null)[sName];
+            } else {
+                return obj.currentStyle[sName];
+            }
+        }
+
+        // 使用offset的方法
+        function moveAni2(obj, target, sName) {
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function () {
+                // 移动方向（属性值）首字母大写
+                var sBig = sName.substring(0, 1).toUpperCase() + sName.substring(1);
+                // 获取元素当前的offset值
+                var oldValue = obj['offset' + sBig];
+                var step = (target - oldValue) / 10;
+                step = step > 0 ? Math.ceil(step) : Math.floor(step);
+                obj.style[sName] = oldValue + step + 'px';
+
+                if (oldValue == target) {
+                    clearInterval(obj.timer);
+                }
+
+            }, 30)
+        }
+
+
+    </script>
+</body>
+
+</html>

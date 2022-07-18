@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM-ex2 imgs carousel</title>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .carousel {
+            position: relative;
+            width: 790px;
+            height: 420px;
+            padding: 20px 0;
+            background: yellowgreen;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        .carousel .imgs-con {
+            position: absolute;
+            width: 600%;
+        }
+
+        .imgs-con li {
+            float: left;
+            width: 750px;
+            margin: 0 20px;
+        }
+
+        .imgs-con li img {
+            display: block;
+            width: 100%;
+        }
+
+        .pages-con {
+            position: absolute;
+            bottom: 3%;
+            left: 50%;
+            padding: 5px 0;
+            transform: translate(-50%, 0);
+        }
+
+        .pages-con a {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin: 0 3px;
+            border: 1px solid #eee;
+            border-radius: 50%;
+            cursor:pointer;
+        }
+        .pages-con a.choose{
+            background:#eee;
+        }
+    </style>
+    <script src="./js/tools.js"></script>
+    <script>
+        window.onload = function () {
+            var carousel = document.querySelector('.carousel');
+            var imgsCon = document.querySelector('.imgs-con');
+            var pagesCon = document.querySelector('.pages-con');
+            var timer = null;
+
+            var imgsArr = imgsCon.children;
+            var index = 0;
+            // 生成下方导航点并绑定点击切换图片事件
+            for (var i = 0; i < imgsArr.length; i++) {
+                var newA = document.createElement('a');
+                newA.setAttribute('data-index', i);
+                pagesCon.appendChild(newA);
+                newA.addEventListener('click', function () {
+                    index = this.getAttribute('data-index');
+                    pageChange();
+                    moveLinearSet(imgsCon, 'left', -790 * index, 300);
+                })
+            }
+            // 把第一个导航点设置为选中状态（背景为实心）
+            var asArr = pagesCon.children;
+            asArr[index].className = 'choose';
+
+            // 生成最后一张图片（克隆第一张图片）
+            var newLi = imgsArr[0].cloneNode(true);
+            imgsCon.appendChild(newLi);
+
+            // 设置图片轮播计时器
+            timer = setInterval(function () {
+                autoImgs();
+            }, 2000)
+            // 鼠标移入时清除计时器
+            carousel.addEventListener('mouseover', function () {
+                clearInterval(timer);
+            })
+            // 鼠标离开时打开计时器
+            carousel.onmouseout = function () {
+                clearInterval(timer);
+                timer = setInterval(function () {
+                    autoImgs();
+                }, 2000);
+            }
+
+
+
+            // 开启自动轮播图片的函数
+            function autoImgs() {
+                index++;
+                moveLinearSet(imgsCon, 'left', -790 * index, 150, pageChange);
+            }
+
+            // 下方圆点改变函数
+            function pageChange() {
+                // 如果索引号超过长度，则还原为0
+                if (index >= asArr.length) {
+                    index = 0;
+                    imgsCon.style.left = 0;
+                }
+                for (var i = 0; i < asArr.length; i++) {
+                    asArr[i].className = '';
+                }
+                asArr[index].className = 'choose';
+                // console.log(this);
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="carousel">
+        <ul class="imgs-con">
+            <li><img src="./../imgs/dy001.jpg" alt=""></li>
+            <li><img src="./../imgs/dy002.jpg" alt=""></li>
+            <li><img src="./../imgs/dy003.jpg" alt=""></li>
+            <li><img src="./../imgs/dy004.jpg" alt=""></li>
+            <li><img src="./../imgs/dy005.jpg" alt=""></li>
+        </ul>
+        <nav class="pages-con"></nav>
+    </div>
+</body>
+
+</html>

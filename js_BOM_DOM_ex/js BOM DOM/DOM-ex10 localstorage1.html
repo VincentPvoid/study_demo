@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM-ex10 localstorage1</title>
+    <style>
+        textarea {
+            display: block;
+            width: 100%;
+            resize: none;
+            margin: 1em 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            float: right;
+            padding: 2px 1em;
+            background: #f40;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button:hover {
+            background: #ff33ff;
+        }
+
+        .clear::after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+
+        .send-con {
+            width: 300px;
+        }
+
+        .send-con button {
+            font-size: 18px;
+        }
+
+        .msg-con {
+            width: 300px;
+            border: 1px solid;
+            box-sizing: border-box;
+        }
+
+        .msg-con li {
+            float: left;
+            width: 95%;
+            background: #ddd;
+            margin: .5em;
+            word-break: break-all;
+        }
+
+        .del-con {
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="send-con clear">
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <button class="send-btn">发送</button>
+    </div>
+
+    <ul class="msg-con clear">
+    </ul>
+
+    <div class="del-con">
+        <button>刪除全部</button>
+    </div>
+
+    <script>
+        var int = document.querySelector('.send-con').querySelector('textarea');
+        var sendBtn = document.querySelector('.send-con').querySelector('.send-btn');
+
+
+        var msgCon = document.querySelector('.msg-con');
+
+        for (var i = 0; i < 100; i++) {
+            if (localStorage.getItem('msg' + i)) {
+                var li = document.createElement('li');
+                li.innerHTML = localStorage.getItem('msg' + i) + '<button>删除</button>';
+                li.setAttribute('data-index', i);
+                msgCon.appendChild(li);
+            } else {
+                break;
+            }
+        }
+        var delBtns = msgCon.querySelectorAll('button');
+        for (var i = 0; i < delBtns.length; i++) {
+            delBtns[i].addEventListener('click', function () {
+                msgCon.removeChild(this.parentElement);
+                var index = this.getAttribute('data-index');
+                localStorage.removeItem('msg' + index);
+            })
+        }
+
+        sendBtn.addEventListener('click', function () {
+            var li = document.createElement('li');
+            var msgLen = msgCon.children.length;
+            localStorage.setItem('msg' + msgLen, JSON.stringify(int.value));
+            li.innerHTML = '<span>#' + msgLen + ' </span>' + int.value + '<button>删除</button>';
+            // li.setAttribute('data-index', msgLen);
+            var delBtn = li.querySelector('button');
+            console.log(localStorage.getItem('msg' + msgLen));
+
+            delBtn.addEventListener('click', function () {
+                var index = this.previousElementSibling.innerHTML.substr(1);
+                // localStorage.removeItem('msg' + index);
+                console.log(localStorage.getItem('msg' + index));
+
+                msgCon.removeChild(this.parentElement);
+            })
+            msgCon.appendChild(li);
+        })
+
+        var delAll = document.querySelector('.del-con').querySelector('button');
+        delAll.addEventListener('click', function () {
+            localStorage.clear();
+        })
+
+
+
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>

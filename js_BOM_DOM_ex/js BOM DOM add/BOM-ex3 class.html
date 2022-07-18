@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM-ex3 class</title>
+    <style>
+        .box1 {
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+
+        .box2 {
+            width: 500px;
+            background: blue;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var btn = document.querySelector('.btn-change');
+            var box1 = document.querySelector('.box1');
+
+            btn.addEventListener('click',function(){
+                toggleClass(box1, 'box2');
+            });
+
+
+            // 检查是否含有该类名
+            function hasClass(obj, cn) {
+                var reg = new RegExp('\\b' + cn + '\\b');
+                return reg.test(obj.className);
+            }
+
+            // 添加指定的类名
+            function addClass(obj, cn) {
+                if (!hasClass(obj, cn)) {
+                    obj.className += ' ' + cn;
+                }
+            }
+
+            // 移除指定的类名
+            function removeClass(obj, cn) {
+                // 注意单词边界和空格
+                // 加空格是为了避免反复切换时空格过多
+                var reg = new RegExp('\\b\\s*' + cn + '\\s*\\b');
+                obj.className = obj.className.replace(reg, ' ');
+            }
+
+            // 切换指定的类名（如果有该类名，就删除；如果没有，则添加）
+            function toggleClass(obj, cn) {
+                if (hasClass(obj, cn)) {
+                    removeClass(obj, cn);
+                } else {
+                    addClass(obj, cn);
+                }
+            }
+
+
+
+        }
+
+
+
+
+    </script>
+</head>
+
+<body>
+    <button class="btn-change">点击改变类名</button>
+    <br><br>
+    <div class="box2 box1"></div>
+
+
+</body>
+
+</html>

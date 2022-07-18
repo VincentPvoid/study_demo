@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOM-ex5 event obj</title>
+    <style>
+        /* 事件对象 */
+        .test1{
+            border:1px solid;
+            line-height:3;
+        }
+        .test1 .e-type{
+            background:#ccc;
+        }
+
+        /* 阻止事件冒泡 */
+        .wapper{
+            width:400px;
+            height:400px;
+            background:#ccc;
+            margin:30px 0;
+        }
+        .outside{
+            width:300px;
+            height:300px;
+            background:blue;
+        }
+        .inside{
+            width:200px;
+            height:200px;
+            background:red;
+        }
+
+        /* 事件委托（代理、委派） */
+        ul{
+            border:1px solid #000;
+            padding:0;
+            width:300px;
+        }
+        ul li{
+            padding:10px 0;
+            background:#ccc;
+        }
+    </style>
+</head>
+<body>
+    <!-- 事件对象 -->
+    <div class="test1">
+        <div class="e-type">返回事件类型</div>
+        <a href="https://cn.bing.com/" target="_blank">必应 阻止默认跳转事件</a>
+    </div>
+
+    <script>
+        var eType = document.querySelector('.e-type');
+        var a = document.querySelector('.test1').querySelector('a');
+
+        // e.type：返回事件的类型，如click、mouseover等，注意不带on
+        eType.addEventListener('click', fn1);
+        eType.addEventListener('mouseover', fn1);
+        eType.addEventListener('mouseout', fn1);
+        function fn1(event){
+            console.log(event.type);
+        }
+
+        //1. e.preventDefault()：该方法阻止默认事件（默认行为）；标准，如不让链接跳转等
+
+        // DOM标准写法
+        // a.addEventListener('click', fn2);
+        // function fn2(event){
+        //     event.preventDefault();
+        // }
+
+        // 2. 传统注册方式阻止默认事件
+        a.onclick = function(event){
+            // 普通浏览器使用e.preventDefault()方法
+            // event.preventDefault();
+
+            // 低版本浏览器（ie6-8）使用returnValue属性
+            // event.retureValue;
+
+            // 使用return false也能阻止默认事件（默认行为），没有兼容性问题；但无法执行return后的代码；只适用于传统注册方式
+            return false;
+        }
+
+    </script>
+
+    <!-- 阻止事件冒泡 -->
+    <div class="wapper">
+        <div class="outside">
+            <div class="inside"></div>
+        </div>
+    </div>
+
+    <script>
+        var wapper = document.querySelector('.wapper');
+        var outside = document.querySelector('.outside');
+        var inside = document.querySelector('.inside');
+
+        // 标准写法：利用事件对象的stopPropagation()方法
+        inside.addEventListener('click', fn11);
+        outside.addEventListener('click', fn22);
+        wapper.addEventListener('click', fn33);
+
+        function fn11(e){
+            alert('inside 11');
+            e.stopPropagation();
+        }
+        function fn22(e){
+            alert('outside 22');
+            e.stopPropagation();
+        }
+        function fn33(e){
+            alert('wapper 33');
+        }
+
+
+    </script>
+
+
+    <!-- 事件委托（代理、委派） -->
+    <ul>
+        <li>测试1</li>
+        <li>测试2</li>
+        <li>测试3</li>
+        <li>测试4</li>
+        <li>测试5</li>
+    </ul>
+
+    <script>
+        var ul = document.querySelector('ul');
+        
+        // 利用事件冒泡，和事件源对象进行处理
+        ul.addEventListener('click', function(e){
+            e.target.style = "background:blue; color:#fff";
+        })
+
+
+    </script>
+    
+</body>
+</html>

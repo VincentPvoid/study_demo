@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM-ex4-3 drag</title>
+    <style>
+        .test1 {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: lightblue;
+        }
+    </style>
+</head>
+
+<body>
+    文字测试
+    <div class="test1"></div>
+
+    <script>
+        var test1 = document.querySelector('.test1');
+
+        // 使用addEventListener方法 
+        // test1.addEventListener('mousedown', function (e) {
+        //     var x = e.pageX - this.offsetLeft;
+        //     var y = e.pageY - this.offsetTop;
+        //     document.addEventListener('mousemove', moveXY);
+
+        //     // 注意此处mouseup的事件无法移除，因此采用document.onmouseup的方法较好
+        //     document.addEventListener('mouseup', function () {
+        //         document.removeEventListener('mousemove', moveXY);
+        //         console.log('aaa');
+        //     });
+
+        //     function moveXY(e) {
+        //         test1.style.left = e.pageX - x + 'px';
+        //         test1.style.top = e.pageY - y + 'px';
+        //     }
+        // })
+
+        // 完全使用传统注册事件方式
+        test1.onmousedown = function (e) {
+            var x = e.pageX - this.offsetLeft;
+            var y = e.pageY - this.offsetTop;
+
+            document.onmousemove = function (e) {
+                test1.style.left = e.pageX- x + 'px';
+                test1.style.top = e.pageY - y + 'px';
+            }
+            document.onmouseup = function(){
+                document.onmousemove = null;
+                // 拖曳事件结束后，移除mouseup事件
+                document.onmouseup = null;
+            }
+            return false;
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>

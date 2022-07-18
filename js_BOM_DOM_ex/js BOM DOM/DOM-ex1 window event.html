@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM-ex1 window event</title>
+    <style>
+        /* 调整窗口大小事件 */
+        .size{
+            width:200px;
+            height:200px;
+            background:#ccc;
+            margin:20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 窗口加载事件 -->
+    <script>
+        window.onload = function(){
+            console.log('onload');
+            var btn1 = document.querySelector('button');
+            btn1.addEventListener('click',function(){
+                console.log('点击事件')
+            })
+        }
+        document.addEventListener('DOMContentLoaded',function(){
+            console.log('DOM');
+        })
+
+    </script>
+
+    <button>按钮测试</button>
+
+
+    <!-- 调整窗口大小事件 -->
+    <script>
+        window.addEventListener('load', function(){
+            var size = document.querySelector('.size');
+            window.onresize = function(){
+                console.log(window.innerWidth);
+                if(window.innerWidth < 800){
+                    size.style.display = 'none';
+                }else{
+                    size.style.display = 'block';
+                }
+            }
+        })
+
+    </script>
+
+    <div class="size"></div>
+
+
+</body>
+</html>

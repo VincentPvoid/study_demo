@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM-ex5 offset1</title>
+    <style>
+        /* 案例：获取鼠标在盒子内的坐标 */
+        .test1 {
+            width: 300px;
+            height: 300px;
+            background: #ccc;
+            margin: 50px;
+        }
+
+        /* 案例：模态框拖曳 */
+        body {
+            margin: 0;
+        }
+
+        h2 {
+            margin: 0;
+            font-weight: normal;
+        }
+
+        input {
+            padding: 0;
+            width: 20em;
+            line-height: 2;
+        }
+
+        button {
+            width: 10em;
+            font-size: 16px;
+            line-height: 2.5;
+            background: #fff;
+            padding: 0;
+            border: 1px solid #ccc;
+        }
+
+        .mask {
+            position: fixed;
+            display:none;
+            width: 100%;
+            height: 100%;
+            background: #00000039;
+        }
+
+        .text-con {
+            width: 9em;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .login-con {
+            position: fixed;
+            display:none;
+            top: 50%;
+            left: 50%;
+            transform:translate(-50%, -50%);
+            margin: auto;
+            border: 1px solid #ccc;
+            width: 450px;
+            height: 230px;
+            padding: 20px 30px;
+            padding-top: 0;
+            background: #fff;
+            text-align: center;
+        }
+
+        .login-con .title {
+            padding-top: 20px;
+            cursor:move;
+        }
+
+        .login-con>div {
+            margin: 25px auto;
+            width: 90%;
+            font-size: 16px;
+        }
+
+        .login-con .usern-con {
+            padding-left: 16px;
+        }
+
+        .login-con .close {
+            position: absolute;
+            top: -50px;
+            right: -26px;
+            width: 3em;
+            height: 3em;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            line-height: 3em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- offset 元素偏移量 -->
+    <!-- 案例：获取鼠标在盒子内的坐标 -->
+    <!-- <div class="test1"></div>
+
+    <script>
+        var test1 = document.querySelector('.test1');
+
+        test1.addEventListener('mousemove', function (e) {
+            var x = e.pageX - this.offsetLeft;
+            var y = e.pageY - this.offsetTop;
+            console.log('x:' + x);
+            console.log('y:' + y);
+        })
+
+    </script> -->
+
+
+    <!-- 案例：模态框拖曳 -->
+    <div class="mask"></div>
+    <div class="text-con">
+        点击弹出登录页面
+    </div>
+    <div class="login-con">
+        <div class="close">关闭</div>
+        <h2 class="title">会员登录</h2>
+        <div class="usern-con">
+            用户名：
+            <input type="text" class="usern">
+        </div>
+        <div class="passw-con">
+            登录密码：
+            <input type="password" class="passw">
+        </div>
+        <button>会员登录</button>
+    </div>
+
+    <script>
+        var mask = document.querySelector('.mask');
+        var textCon = document.querySelector('.text-con');
+        var title = document.querySelector('.title');
+        var btnClose = document.querySelector('.close');
+        var login = document.querySelector('.login-con');
+        
+        textCon.onclick = function(){
+            login.style.display = 'block';
+            mask.style.display = 'block';
+        }
+        btnClose.addEventListener('click', function(){
+            login.style.display = 'none';
+            mask.style.display = 'none';
+        })
+
+        title.addEventListener('mousedown', function(e){
+            var x = e.pageX - login.offsetLeft;
+            var y = e.pageY - login.offsetTop;
+            document.addEventListener('mousemove', moveFn)
+
+            function moveFn(e){
+                login.style.left = e.clientX - x + 'px';
+                login.style.top = e.clientY - y + 'px';
+            }
+            // 注意此处mouseup事件没有被完全移除
+            document.addEventListener('mouseup', function(){
+                document.removeEventListener('mousemove', moveFn)
+            })
+           
+        })
+        
+
+
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM ex1-2 node form</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 100px auto;
+            font-size: 18px;
+        }
+
+        tr,
+        td,
+        th {
+            border: 2px solid;
+            padding: 2px 1em;
+            min-width:3em;
+        }
+
+        .add-con {
+            border: 2px solid;
+            width: 300px;
+            padding: 10px;
+            margin: auto;
+        }
+
+        .add-con h2 {
+            font-size: 18px;
+        }
+        .add-con .items{
+            text-align:center;
+        }
+
+        .add-con input {
+            margin: 3px 0;
+            width: 80%;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <!-- 表格记录操作 -->
+    <div class="table-con">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Salary</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Tom</td>
+                    <td>Tom@tom.com</td>
+                    <td>5000</td>
+                    <td>
+                        <a href="javascript:;">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Maria</td>
+                    <td>maria@maria.com</td>
+                    <td>10000</td>
+                    <td>
+                        <a href="javascript:;">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Bob</td>
+                    <td>bob@bob.com</td>
+                    <td>5000</td>
+                    <td>
+                        <a href="javascript:;">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="add-con">
+        <h2 class="title">添加新员工</h2>
+        <div class="items">
+            name:
+            <input type="text" name="name" id="">
+            email:
+            <input type="text" name="email" id="">
+            salary:
+            <input type="text" name="salary" id="">
+            <button>Sumbit</button>
+        </div>
+    </div>
+
+    <script>
+        var tableBody = document.querySelector('.table-con').querySelector('tbody');
+        var inputs = document.querySelector('.add-con').querySelectorAll('input');
+
+        var btnSum = document.querySelector('.add-con').querySelector('.items').querySelector('button');
+
+        var as = tableBody.querySelectorAll('a');
+        
+        // 为每个a绑定删除事件
+        for(var i = 0; i < as.length; i++){
+            as[i].addEventListener('click',aDel);
+        }
+
+        // 提交数据按钮事件
+        btnSum.addEventListener('click',function(){
+            var tr = document.createElement('tr');
+            for(var i = 0; i < inputs.length; i++){
+                var td = document.createElement('td');
+                td.innerHTML = inputs[i].value;
+                tr.appendChild(td);
+            }
+            td = document.createElement('td');
+            td.innerHTML = '<a href="javascript:;">Delete</a>';
+            tr.appendChild(td);
+            tableBody.appendChild(tr);
+
+            td.children[0].addEventListener('click',aDel);
+            
+            // td.children[0].addEventListener('click',function(){
+            //     var name = this.parentNode.parentNode.children[0].innerHTML;
+            //     var flag = confirm('真的要删除'+ name +'的信息吗？')
+            //     if(flag){
+            //         // tableBody.removeChild(this.parentNode.parentNode);
+
+            //         // 不需要获取tbody的做法
+            //         var tr = this.parentNode.parentNode;
+            //         tr.parentNode.removeChild(tr);
+            //     }
+            //     return false;
+            // })
+        })
+
+        // 可以把删除事件封装为一个函数
+        // 这样可以简化相同代码
+        function aDel(){
+                var tr = this.parentNode.parentNode;
+                var name = tr.children[0].innerHTML;
+                var flag = confirm('真的要删除'+ name +'的信息吗？');
+                if(flag){
+                    tr.parentNode.removeChild(tr);
+                }
+                // 阻止a元素进行跳转的默认行为
+                return false;
+            }
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

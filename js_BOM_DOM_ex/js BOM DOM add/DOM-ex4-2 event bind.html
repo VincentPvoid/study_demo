@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM-ex5 event bind</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            background: #ccc;
+        }
+    </style>
+    <script>
+        // 功能未实现；在ie8中无法获取元素
+
+        window.onload = function () {
+            var div = document.querySelector('.div');
+            // var div = document.getElementsByTagName('div')[0];
+            bind(div, 'click', function () {
+                console.log('aaaaaaa');
+                console.log(this);
+            })
+
+            function bind(obj, eventStr, callback) {
+                if (obj.addEventListener) {
+                    // 大部分浏览器兼容的方式
+                    obj.addEventListener(eventStr, callback);
+                } else {
+                    // ie8及以下版本
+                    obj.attachEvent('on' + eventStr, function () {
+                        // 在匿名函数中调用回调函数
+                        bind.call(obj);
+                    });
+                }
+            }
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <div class="div"></div>
+
+
+</body>
+
+
+</html>

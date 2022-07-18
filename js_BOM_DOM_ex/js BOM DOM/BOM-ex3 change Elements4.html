@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOM-ex3 change Elements4</title>
+    <style>
+        /* 案例：百度换肤 */
+        .imgs-con {
+            width: 800px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+            background: #fff;
+        }
+
+        .imgs-con img {
+            float: left;
+            display: block;
+            width: 23%;
+            height: 115px;
+            margin: 0 6px;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .imgs-con::after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+
+        body {
+            transition: all 0.3s;
+            background: url(./../imgs/BG001.jpg) no-repeat top center/100%;  
+        }
+
+        /* 案例：表格鼠标悬浮时变色 */
+        table {
+            border-collapse: collapse;
+            width: 600px;
+            text-align: center;
+            background:#fff;
+        }
+
+        thead {
+            background: lightblue;
+        }
+
+        tr {
+            border-top: 1px solid;
+            border-bottom: 1px solid;
+            height: 2em;
+        }
+        .bg-gray{
+            background-color:#ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 排他思想 -->
+    <!-- 简单按钮切换例子 -->
+    <button>按钮测试</button>
+    <button>按钮测试</button>
+    <button>按钮测试</button>
+    <button>按钮测试</button>
+    <button>按钮测试</button>
+
+    <script>
+        var btns = document.getElementsByTagName('button');
+        for (var i = 0; i < btns.length; i++) {
+            btns[i].onclick = function () {
+                for (var i = 0; i < btns.length; i++) {
+                    btns[i].style.backgroundColor = '';
+                }
+                this.style.backgroundColor = 'lightblue';
+            }
+        }
+
+    </script>
+
+    <!-- 案例：百度换肤 -->
+    <!-- 点击小图，实现切换整个页面背景图片的效果 -->
+    <div class="imgs-con">
+        <img src="./../imgs/BG001.jpg" alt="">
+        <img src="./../imgs/BG002.jpg" alt="">
+        <img src="./../imgs/BG003.jpg" alt="">
+        <img src="./../imgs/BG004.jpg" alt="">
+    </div>
+
+    <script>
+        // 选择imgs-con里面的img元素
+        var imgs = document.querySelector('.imgs-con').querySelectorAll('img');
+        var bodyEle = document.body;
+        for (var i = 0; i < imgs.length; i++) {
+            imgs[i].onclick = function () {
+                for (var i = 0; i < imgs.length; i++) {
+                    imgs[i].style.borderColor = 'transparent';
+                }
+                this.style.borderColor = 'red';
+                // 让html元素获取当前img的url地址
+                bodyEle.style.backgroundImage = 'url(' + this.src + ')';
+            }
+        }
+
+    </script>
+
+
+    <!-- 案例：表格鼠标悬浮时变色 -->
+    <div class="table-con">
+        <table>
+            <caption>表格标题</caption>
+            <thead>
+                <tr>
+                    <th>表单列1</th>
+                    <th>表头列2</th>
+                    <th>标题列3</th>
+                    <th>标题列4</th>
+                    <th>标题列5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>数据1</td>
+                    <td>数据2</td>
+                    <td>数据3</td>
+                    <td>数据4</td>
+                    <td>数据5</td>
+                </tr>
+                <tr>
+                    <td>数据1</td>
+                    <td>数据2</td>
+                    <td>数据3</td>
+                    <td>数据4</td>
+                    <td>数据5</td>
+                </tr>
+                <tr>
+                    <td>数据1</td>
+                    <td>数据2</td>
+                    <td>数据3</td>
+                    <td>数据4</td>
+                    <td>数据5</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var rows = document.querySelector('.table-con').querySelectorAll('tr');
+        for (var i = 1; i < rows.length; i++){
+            rows[i].onmouseover = function(){
+                this.className = 'bg-gray';
+            }
+            rows[i].onmouseout = function(){
+                this.className = '';
+            }
+        }
+
+    </script>
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOM-ex7 keyboard event</title>
+    <style>
+        /* 案例：模拟京东按键输入内容 */
+        .search-con {
+            position: relative;
+        }
+
+        .search {
+            outline: none;
+            width: 200px;
+            padding: 0 10px;
+            border: 2px solid #f40;
+            line-height: 1.5;
+            font-size: 18px;
+        }
+
+        .search-con a {
+            position: absolute;
+            background: #f40;
+            padding: 0 10px;
+            height: 100%;
+            color: #fff;
+            line-height: 31px;
+            text-decoration: none;
+        }
+
+        /* 案例：模拟京东快递单号查询 */
+        .nums-con {
+            position: relative;
+            margin: 100px 20px;
+        }
+
+        .big-nums {
+            display: none;
+            position: absolute;
+            top: -50px;
+            border: 1px solid #ccc;
+            min-width: 200px;
+            padding: 0 5px;
+            font-size: 18px;
+            line-height: 2;
+            margin-bottom: 15px;
+            box-shadow: 1px 0 5px #ddd;
+        }
+
+        .big-nums::after {
+            position: absolute;
+            top: 31px;
+            left: 30px;
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            background: #fff;
+            transform: rotate(45deg);
+        }
+
+        .nums-con .nums {
+            width: 200px;
+            padding: 0 5px;
+            line-height: 2;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 案例：模拟京东按键输入内容 -->
+    <!-- 当按下键盘s键，光标就定位到搜索框 -->
+    <div class="search-con">
+        <input type="text" class="search">
+        <a href="javascript:;">搜索</a>
+    </div>
+
+    <script>
+        var search = document.querySelector('.search');
+
+        // 注意选择键盘事件
+        // 如果选择keypress或keydown，会在按下时就触发事件，效果不好
+        // document.addEventListener('keyup', function (e) {
+        //     if (e.keyCode === 83) {
+        //         // 搜索框获得焦点：使用js中的focus()方法
+        //         search.focus();
+        //     }
+        // })
+    </script>
+
+
+    <!-- 案例：模拟京东快递单号查询 -->
+    <!-- 要求在文本框中输入内容时，文本框上方自动显示大字号的内容。 -->
+    <div class="nums-con">
+        <div class="big-nums">test</div>
+        <input type="text" class="nums" name="" id="" placeholder="请输入快递单号">
+    </div>
+
+    <script>
+        var input = document.querySelector('.nums');
+        var bigNums = document.querySelector('.big-nums');
+
+        input.addEventListener('focus', function () {
+            if (input.value != '') {
+                bigNums.style.display = 'block';
+            }
+            this.placeholder = '';
+        })
+        input.addEventListener('blur', function () {
+            bigNums.style.display = 'none';
+            this.placeholder = '请输入快递单号';
+        })
+        input.addEventListener('keyup', function () {
+            if (input.value == '') {
+                bigNums.style.display = 'none';
+            } else {
+                bigNums.style.display = 'block';
+                bigNums.innerHTML = input.value;
+            }
+        })
+    </script>
+
+
+
+</body>
+
+</html>

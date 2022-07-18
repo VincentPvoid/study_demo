@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM-ex4-4 ie8 drag</title>
+    <style>
+        #box1,
+        #box2 {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+        }
+
+        #box1 {
+            background: blue;
+        }
+
+        #box2 {
+            top: 300px;
+            left: 500px;
+            background: #ccf;
+        }
+        p{
+            font-size:30px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var box1 = document.getElementById('box1');
+            dragFn(box1);
+            dragFn(box2);
+
+            // 可以兼容ie8的兼容性写法
+            function dragFn(obj) {
+
+                // 用于取消ie8的默认行为
+                // 当调用一个元素的setCapture()方法以后，该元素将会把下一次所有的鼠标按下相关的事件捕获到自身上
+                obj.setCapture && obj.setCapture();
+
+                obj.onmousedown = function (e) {
+                    e = e || window.event;
+                    var x = e.clientX - obj.offsetLeft;
+                    var y = e.clientY - obj.offsetTop;
+
+                    document.onmousemove = function (e) {
+                        e = e || window.event;
+                        obj.style.left = e.clientX - x + 'px';
+                        obj.style.top = e.clientY - y + 'px';
+                    }
+                    document.onmouseup = function () {
+                        document.onmousemove = null;
+                        document.onmouseup = null;
+                    }
+                }
+
+                // 用于取消ie8的默认行为
+                obj.releaseCapture && obj.releaseCapture();
+
+                // 用于取消其他浏览器的默认行为
+                return false;
+
+            }
+
+
+
+        }
+    </script>
+</head>
+
+<body>
+    <div id="box1"></div>
+    <div id="box2"></div>
+
+</body>
+
+</html>

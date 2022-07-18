@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOX-ex4 node3 table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            line-height: 2;
+            text-align: center;
+        }
+
+        thead {
+            background: #ccc;
+        }
+
+        th,
+        td {
+            border: 1px solid;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 案例：动态生成表格 -->
+    <!-- 打开页面时自动生成一个表格，当在程序中添加数据时，再次刷新即可更新表格 -->
+    <div class="table-con">
+        <table>
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>科目</th>
+                    <th>成绩</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        // 每组数据作为一个对象，都放入一个数组中
+        var dates = [
+            {
+                name: 'test1',
+                subject: 'javascript',
+                score: 99
+            }, {
+                name: 'test2',
+                subject: 'javascript',
+                score: 92
+            }, {
+                name: 'test3',
+                subject: 'javascript',
+                score: 99
+            }, {
+                name: 'test4',
+                subject: 'javascript',
+                score: 78
+            }, {
+                name: 'test5',
+                subject: 'javascript',
+                score: 80
+            }, {
+                name: '12',
+                subject: 'javascript',
+                score: 6787
+            }
+        ];
+
+        var tbody = document.querySelector('tbody');
+        for (var i = 0; i < dates.length; i++) {
+            var tr = document.createElement('tr');
+            tbody.appendChild(tr);
+            for (var prop in dates[i]) {
+                var td = document.createElement('td');
+                td.innerHTML = dates[i][prop];
+                tr.appendChild(td);
+            }
+            td = document.createElement('td');
+            td.innerHTML = '<a href="javascript:;">删除</a>';
+            tr.appendChild(td);
+            // 绑定删除事件的两种方法
+
+            // 在生成表格数据（行）时就进行绑定
+            // var a = td.querySelector('a');
+            // a.onclick = function(){
+            //     tbody.removeChild(this.parentNode.parentNode);
+            // }
+        }
+        // 在完全生成表格数据后再进行绑定
+        var as = tbody.querySelectorAll('a');
+        for (var i = 0; i < as.length; i++) {
+            as[i].onclick = function () {
+                tbody.removeChild(this.parentNode.parentNode);
+            }
+        }
+
+
+
+
+
+    </script>
+
+
+    <!-- 即时添加数据进入表格 -->
+
+    <!-- <div class="table-con">
+        <table>
+            <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>科目</th>
+                    <th>成绩</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="input-con">
+        <div class="input-item">
+            姓名：<input class="name" type="text">
+        </div>
+        <div class="input-item">
+            科目：<input class="kind" type="text">
+        </div>
+        <div class="input-item">
+            成绩：<input class="points" type="text">
+        </div>
+        <button>提交</button>
+    </div>
+
+    <script>
+        var table = document.querySelector('.table-con').querySelector('table');
+        var btn = document.querySelector('button');
+        // var inItems = document.getElementsByClassName('input-item');
+        var items = document.querySelectorAll('input');
+        btn.onclick = function () {
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].value == '') {
+                    alert('请输入完整数据');
+                    return false;
+                }
+            }
+            // var obj = {
+            //     name : items[0].value,
+            //     kind : items[1].value,
+            //     points :items[2].value
+            // }
+            var tr = document.createElement('tr');
+            table.children[1].appendChild(tr);
+            for (var i = 0; i < 3; i++) {
+                var td = document.createElement('td');
+                td.innerHTML = items[i].value;
+                tr.appendChild(td);
+            }
+            var td = document.createElement('td');
+            td.innerHTML = '<a href="javascript:;">删除</a>';
+            tr.appendChild(td);
+            // tr.children[3].innerHTML = '<a href="javascript:;">删除</a>';
+            var del = tr.querySelector('a');
+            del.onclick = function () {
+                del.parentElement.parentElement.remove();
+            }
+
+        }
+
+    </script> -->
+
+
+
+</body>
+
+</html>

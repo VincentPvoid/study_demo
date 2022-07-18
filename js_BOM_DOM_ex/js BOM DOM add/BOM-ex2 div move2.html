@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM-ex2 div move2</title>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var box1 = document.querySelector('.box1');
+            var btn800 = document.querySelector('.btn800');
+            var btn0 = document.querySelector('.btn0');
+
+            var btn700 = document.querySelector('.btn700');
+            var btn_50 = document.querySelector('.btn-50');
+
+            btn800.onclick = function () {
+                moveLinear(box1, 800, 30);
+            }
+
+            btn0.addEventListener('click', function () {
+                moveLinear(box1, 0, 30);
+            })
+
+            btn700.addEventListener('click', function () {
+                moveLinear2(box1, 700, 20);
+            })
+            btn_50.addEventListener('click', function () {
+                moveLinear2(box1, -50, 20);
+            })
+
+            var box2 = document.querySelector('.box2');
+            var box2test = document.querySelector('.box2test');
+
+            box2test.onclick = function(){
+                moveLinearg(box2,'width',500,20);
+            }
+
+            // 匀速水平运动函数
+            // 不使用offset
+            function moveLinear(obj, target, speed) {
+                clearInterval(obj.timer);
+                var temp = parseInt(getStyle(obj, 'left'));
+                if (temp >= target) {
+                    speed = -speed;
+                }
+
+                obj.timer = setInterval(function () {
+                    var oldValue = parseInt(getStyle(obj, 'left'));
+                    var newValue = oldValue + speed;
+                    if ((speed < 0 && newValue < target) || (speed > 0 && newValue > target)) {
+                        newValue = target;
+                    }
+                    obj.style.left = newValue + 'px';
+                    if (newValue == target) {
+                        clearInterval(obj.timer);
+                    }
+                }, 30)
+            }
+
+            // 均匀运动函数改进
+            // obj：要执行动画的对象
+            // attr：要执行动画的样式，比如 left top width height
+            // target：执行动画的目标位置
+            // speed：移动的速度
+            // callback：回调函数
+            function moveLinearg(obj, attr, target, speed, callback) {
+                clearInterval(obj.timer);
+                var temp = parseInt(getStyle(obj, attr));
+                if (temp >= target) {
+                    speed = -speed;
+                }
+                obj.timer = setInterval(function () {
+                    var oldValue = parseInt(getStyle(obj, attr));
+                    var newValue = oldValue + speed;
+                    if ((newValue > target && speed > 0) || (newValue < target && speed < 0)) {
+                        newValue = target;
+                    }
+                    obj.style[attr] = newValue + 'px';
+                    if (newValue == target) {
+                        clearInterval(obj.timer);
+                        callback && callback();
+                    }
+                }, 30)
+            }
+
+            // 获取元素当前显示样式的兼容性函数
+            function getStyle(obj, sName) {
+                if (window.getComputedStyle) {
+                    return getComputedStyle(obj, null)[sName];
+                } else {
+                    return obj.currentStyle[sName];
+                }
+            }
+
+            function moveLinear2(obj, target, speed) {
+                clearInterval(obj.timer);
+                if (obj.offsetLeft > target) {
+                    speed = -speed;
+                }
+                obj.timer = setInterval(function () {
+                    var newLeft = obj.offsetLeft + speed;
+                    if ((speed < 0 && newLeft < target) || (speed > 0 && newLeft > target)) {
+                        newLeft = target;
+                    }
+                    obj.style.left = newLeft + 'px';
+                    if (newLeft == target) {
+                        clearInterval(obj.timer);
+                    }
+
+                }, 10)
+            }
+
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="btn-con" style="border:1px solid;padding:10px 2px; margin:20px 0;">
+        <button class="btn800">点击移动到800px</button>
+        <button class="btn0">点击移动到0</button>
+        <br>
+
+        <button class="btn700">点击移动到700px</button>
+        <button class="btn-50">点击移动到-50px</button>
+    </div>
+    <button class="box2test">div2测试</button>
+    
+    <div class="box1" style="position:absolute;left:0px; top:150px; width:100px; height:100px; background:blue;"></div>
+    <div class="box2" style="position:absolute;left:0px; top:300px; width:100px; height:100px; background:#ccc;"></div>
+</body>
+
+</html>

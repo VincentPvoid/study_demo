@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM-ex3 open menug</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        .menu-con {
+            background: #ddd;
+            width: 11em;
+            margin: 0 auto;
+            padding-bottom: 8px;
+            overflow: hidden;
+            font-size: 14px;
+            border-radius: 8px;
+        }
+
+        .menu-con .menu-title {
+            position: relative;
+            display: block;
+            padding: 3px 25px;
+            background: #333;
+            color: #fff;
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+        }
+
+        .menu-con a {
+            display: none;
+            padding: 0 10px;
+            height: 30px;
+            border-bottom: 1px solid #f40;
+            line-height: 30px;
+            color: #f40;
+        }
+
+        .menu-con .open a {
+            display: block;
+        }
+
+        .menu-con a:last-child {
+            border: none;
+        }
+
+        .menu-con a:hover {
+            background: #f40;
+            color: #fff;
+        }
+
+        /* div.collapsed {
+            height: 36px;
+            overflow: hidden;
+        } */
+
+        .menu-title::before {
+            position: absolute;
+            left: 9px;
+            top: 12px;
+            content: "";
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-left: 10px solid #fff;
+        }
+
+        .open .menu-title::before {
+            top: 16px;
+            left: 7px;
+            transform: rotate(90deg);
+        }
+    </style>
+    <script src="js/tools.js"></script>
+</head>
+
+<body>
+    <div class="menu-con">
+        <div class="open">
+            <span class="menu-title">在线工具</span>
+            <a href="#">图像优化</a>
+            <a href="#">收藏夹图标生成器</a>
+            <a href="#">邮件</a>
+            <a href="#">密码</a>
+            <a href="#">文字测试</a>
+        </div>
+        <div>
+            <span class="menu-title">支持我们</span>
+            <a href="#">图像优化</a>
+            <a href="#">邮件</a>
+            <a href="#">文字测试</a>
+        </div>
+        <div>
+            <span class="menu-title">合作伙伴</span>
+            <a href="#">图像优化</a>
+            <a href="#">邮件</a>
+            <a href="#">密码</a>
+            <a href="#">文字测试</a>
+        </div>
+        <div>
+            <span class="menu-title">测试电流</span>
+            <a href="#">图像优化</a>
+            <a href="#">收藏夹图标生成器</a>
+            <a href="#">邮件</a>
+            <a href="#">密码</a>
+            <a href="#">文字测试</a>
+            <a href="#">邮件</a>
+        </div>
+    </div>
+
+    <script>
+        // 使用open来控制菜单开关
+        // div的高度不好确定，需要用a的显示与否支撑；因此在做动画效果时，a已经消失，效果不好
+        var divs = document.querySelector('.menu-con').querySelectorAll('div');
+        var menuTs = document.querySelectorAll('.menu-title');
+
+        // 设置一个变量保存当前打开的菜单（即当其他菜单展开时需要折叠的菜单）
+        var openDiv = divs[0];
+        for (var i = 0; i < divs.length; i++) {
+            menuTs[i].addEventListener('click', function () {
+                var thisPar = this.parentNode;
+                // thisPar.classList.toggle('open');
+                toggleOpen(thisPar);
+
+                if (openDiv != thisPar && openDiv.classList.contains('open')) {
+                    // openDiv.classList.remove('open');
+                    // openDiv.classList.toggle('open');
+                    toggleOpen(openDiv);
+                }
+                openDiv = thisPar;
+            })
+        }
+
+
+        function toggleOpen(obj){
+            var start = obj.offsetHeight;
+            obj.classList.toggle('open');
+            var end = obj.offsetHeight;
+            obj.style.height = start + 'px';
+            moveLinearSet(obj,'height',end,20,function(){
+                obj.style.height = '';
+            })
+        }
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BOM-ex2 basic Event</title>
+    <style>
+        button {
+            display: block;
+            margin: 20px 0;
+        }
+
+        div {
+            margin: 20px 0;
+            background: #ccc;
+            width: 300px;
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="btn1">按钮事件弹出框测试</button>
+
+    <button id="btn2">点击显示时间</button>
+    <div class="test1">点击显示当前时间</div>
+    <div class="test2"></div>
+
+    <div class="test3">
+        标签内容读取测试
+        <span>123</span>
+    </div>
+
+
+    
+    
+    <!-- 事件基础 -->
+    <script>
+        var btn1 = document.getElementById('btn1');
+        btn1.onclick = function () {
+            alert('弹出框');
+        }
+
+
+        // 改变元素内容
+        // 点击显示当前时间
+        var btn2 = document.getElementById('btn2');
+        var div1 = document.getElementsByClassName('test1');
+        btn2.onclick = function () {
+            // div1[0].innerText = getDate();
+            div1[0].innerHTML = getDate();
+        }
+
+        // 不需点击，自动显示当前时间
+        var div2 = document.getElementsByClassName('test2');
+        div2[0].innerText = getDate();
+        // div2[0].innerHTML = getDate();
+
+
+        // 得到当前日期的函数
+        function getDate() {
+            var obj = new Date();
+            var year = obj.getFullYear();
+            var month = obj.getMonth() + 1;
+            var date = obj.getDate();
+            var hour = obj.getHours();
+            var min = obj.getMinutes();
+            var sec = obj.getSeconds();
+            var num = obj.getDay();
+            var day = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六']
+
+            return '今天是' + year + '年' + month + '月' + date + '日' + day[num];
+        }
+
+        // element.innerText与element.innerHTML的区别
+        var div3 = document.querySelector('.test3');
+        // div3.innerText = "<b>加粗测试</b>";
+        // div3.innerHTML = "<b>加粗测试</b>";
+        console.log(div3.innerText);
+        console.log(div3.innerHTML);
+        
+    </script>
+
+    
+
+</body>
+
+</html>
