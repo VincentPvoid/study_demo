@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>nac-change</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul::after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+
+        [class^=nav-con] {
+            width: 750px;
+            margin: 0 auto 20px;
+        }
+
+        [class^=nav-con] ul li {
+            float: left;
+            background: #ccc;
+            height: 50px;
+            width: 93.75px;
+        }
+
+        /* 例子1 响应式导航栏，使用float方式 */
+        @media screen and (max-width:750px) {
+            .nav-con1 {
+                width: 100%;
+            }
+            .nav-con1 ul li {
+                width: 33.33%;
+            }
+        }
+
+        /* 例子2 响应式导航栏，使用flex方式 */
+        .nav-con3 ul{
+            display:flex;
+            flex-wrap:wrap;
+        }
+        @media screen and (max-width:750px){
+            .nav-con3{
+                width:100%;
+            }
+            .nav-con3 ul li {
+                width: 33.33%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 例子1 响应式导航栏，使用float方式 -->
+    <nav class="nav-con1">
+        <ul>
+            <li>111</li>
+            <li>使用float</li>
+            <li>Soluta!</li>
+            <li>Minus.</li>
+            <li>Non?</li>
+            <li>Quia?</li>
+            <li>Repellat!</li>
+            <li>Veritatis!</li>
+        </ul>
+    </nav>
+    <!-- 非响应式导航栏，对比用 -->
+    <nav class="nav-con2">
+        <ul>
+            <li>非响应式</li>
+            <li>Nulla.</li>
+            <li>Soluta!</li>
+            <li>Minus.</li>
+            <li>Non?</li>
+            <li>Quia?</li>
+            <li>Repellat!</li>
+            <li>Veritatis!</li>
+        </ul>
+    </nav>
+    <!-- 例子2 响应式导航栏，使用flex方式 -->
+    <nav class="nav-con3">
+        <ul>
+            <li>222</li>
+            <li>使用flex</li>
+            <li>Soluta!</li>
+            <li>Minus.</li>
+            <li>Non?</li>
+            <li>Quia?</li>
+            <li>Repellat!</li>
+            <li>Veritatis!</li>
+        </ul>
+    </nav>
+</body>
+
+</html>

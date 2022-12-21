@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>flex2</title>
+    <style>
+
+        /* 例子1 主轴为x轴时设置居中 */
+        .wapper1{
+            display:flex;
+            width:1000px;
+            height:500px;
+            margin:10px auto;
+            background:lightblue;
+            justify-content:center;
+            align-items:center;
+        }
+        .wapper1 span{
+            margin:0 10px;
+            width:200px;
+            height:100px;
+            background:blue;
+            color:#fff;
+        }
+
+        /* 例子2 主轴为y轴时设置居中 */
+        .wapper2{
+            display:flex;
+            width:1000px;
+            height:500px;
+            margin:10px auto;
+            background:lightblue;
+            flex-direction:column;
+            justify-content:center;
+            align-items:center;
+        }
+        .wapper2 span{
+            margin:10px 0;
+            width:200px;
+            height:100px;
+            background:blue;
+            color:#fff;
+        }
+/* align-self属性，控制子项目自身在侧轴上的排列方式；可覆盖父元素的align-items属性 */
+        .wapper2 span:last-child{
+            /* align-self:stretch; */
+            /* align-self:flex-start; */
+            align-self:flex-end;
+        }
+
+    /* 例子3 align-content，设置交叉轴上的子元素的排列方式（多行） */
+        .wapper3{
+            display:flex;
+            width:1000px;
+            height:500px;
+            margin:10px auto;
+            background:lightblue;
+            /* flex-direction:column; */
+            /* flex-wrap:wrap; */
+            /* flex-flow复合属性 */
+            flex-flow:row wrap;
+            align-content:flex-start;
+            /* align-content:flex-end; */
+            /* align-content:center; */
+            /* align-content:space-around; */
+            /* align-content:space-between; */
+        }
+        .wapper3 span{
+            margin:10px;
+            width:200px;
+            height:100px;
+            background:blue;
+            color:#fff;
+        }
+
+        /* 例子4 利用子元素flex属性布局（三栏布局） */
+        .nav1{
+            display:flex;
+            width:500px;
+            height:100px;
+            margin:10px auto;
+            background:lightblue;
+        }
+        .nav1 div:nth-child(1){
+            width:100px;
+            background:red;
+        }
+        .nav1 div:nth-child(2){
+            flex:1;
+            background:#ccc;
+        }
+        .nav1 div:nth-child(3){
+            width:100px;
+            background:blue;
+        }
+
+        /* 例子5 三栏布局，主区域在前，利用order属性改变子项目排列顺序 */
+        .nav2{
+            display:flex;
+            width:500px;
+            height:100px;
+            margin:10px auto;
+            background:lightblue;
+        }
+        .nav2 .main{
+            flex:1;
+            background:#ccc;
+        }
+        .nav2 .left{
+            /* order属性值默认为0，数值越小排列越靠前 */
+            order:-1;
+            width:100px;
+            background:red;
+        }
+        .nav2 .right{
+            width:100px;
+            background:blue;
+        }
+
+        /* 例子6 背景线性渐变，注意两种写法的区别 */
+        .bg1{
+            margin:20px auto;
+            width:700px;
+            height:100px;
+            background:-webkit-linear-gradient(left,red,blue,green);
+        }
+        .bg2{
+            margin:20px auto;
+            width:700px;
+            height:300px;
+            background:linear-gradient(to right,red,blue,green);
+        }
+    </style>
+</head>
+<body>
+    <!-- 例子1 主轴为x轴时设置居中 -->
+    <div class="wapper1">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+    </div>
+
+    <!-- 例子2 主轴为y轴时设置居中 -->
+    <div class="wapper2">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+    </div>
+
+    <!-- 例子3 align-content，设置交叉轴上的子元素的排列方式（多行） -->
+    <div class="wapper3">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span>6</span>
+    </div>
+
+    <!-- 例子4 利用子元素flex属性布局（三栏布局） -->
+    <nav class="nav1">
+        <div></div>
+        <div></div>
+        <div></div>
+    </nav>
+
+    <!-- 例子5 三栏布局，主区域在前，利用order属性改变子项目排列顺序 -->
+    <nav class="nav2">
+        <div class="main">主区域</div>
+        <div class="left">左侧边栏</div>
+        <div class="right">右侧边栏</div>
+    </nav>
+
+    <!-- 例子6 背景线性渐变，注意两种写法的区别 -->
+    <div class="bg1"></div>
+    <div class="bg2"></div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximun-scale=1.0,minimun-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mobile-ex1</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        /* 例子1 清除一些默认样式 */
+        div{
+            margin:50px 10px;
+        }
+        .test1 a:last-child{
+            -webkit-tap-highlight-color:transparent;
+        }
+        .test2 input:last-of-type{
+            -webkit-appearance:none;
+        }
+        .test2 button:last-child{
+            -webkit-appearance:none;
+        }
+        .test3 a:last-child{
+            -webkit-touch-callout:none;
+        }
+
+        /* 例子2 流式布局（百分比布局）简单例子 */
+        .wapper{
+            width:100%;
+            height:500px;
+            background:lightblue;
+            margin:0 auto;
+            max-width:980px;
+            min-width:320px;
+        }
+        .wapper div{
+            float:left;
+            width:50%;
+            height:100px;
+            margin:0;
+        }
+        .wapper .left{
+            background:red;
+        }
+        .wapper .right{
+            background:blue;
+        }
+    </style>
+</head>
+<body>
+    <!-- 例子1 清除一些默认样式 -->
+    <div class="test1">
+        <a href="#">默认点击高亮</a>
+        <a href="#">清除点击高亮</a>
+    </div>
+    <div class="test2">
+        <input type="button" value="默认样式">
+        <input type="button" value="去除默认样式">
+        <button>按钮测试</button>
+        <button>按钮测试</button>
+    </div>
+    <div class="test3">
+        <a href="#">默认长按弹出菜单</a>
+        <a href="#">禁用长按弹出菜单</a>
+    </div>
+
+    
+    <!-- 例子2 流式布局（百分比布局）简单例子 -->
+    <section class="wapper">
+        <div class="left">111</div>
+        <div class="right">222</div>
+    </section>
+    
+</body>
+</html>

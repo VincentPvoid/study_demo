@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>flex1</title>
+    <style>
+        /* wapper容器公共设置 */
+        [class*=wapper]{
+            display:flex;
+            width:80%;
+            height:200px;
+            margin:20px auto;
+            background:lightblue;
+        }
+        span{
+            background:#ccc;
+        }
+        /* 例子1 row默认排列方向（从左向右） */
+        .wapper1 span{
+            width:100px;
+            height:100px;
+            /* flex:1; */
+        }
+        /* 例子2 row-reverse（效果类似于右浮动） */
+        .wapper2{
+            flex-direction:row-reverse;
+        }
+        .wapper2 span{
+            width:200px;
+            height:100px;
+            margin:0 10px;
+        }
+        
+        /* 例子3 column从上到下 */
+        .wapper3{
+            height:initial;
+            flex-direction:column;
+        }
+        .wapper3 span{
+            width:200px;
+            height:50px;
+            margin:0 10px;
+        }
+        /* 例子4 从容器的终止线开始排列（注意与row-reverse的区别） */
+        .wapper4{
+            justify-content:flex-end;
+        }
+        .wapper4 span{
+            width:200px;
+            margin:0 10px;
+        }
+        /* 例子5 在主轴上居中对齐 */
+        .wapper5{
+            height:100px;
+            justify-content:center;
+        }
+        .wapper5 span{
+            width:100px;
+        }
+        /* 例子6 子元素平分容器剩余空间 */
+        .wapper6{
+            height:100px;
+            justify-content:space-around;
+        }
+        .wapper6 span{
+            width:100px;
+        }
+        /* 例子7 子元素两边贴边，再平分剩余空间 */
+        .wapper7{
+            height:100px;
+            justify-content:space-between;
+        }
+        .wapper7 span{
+            width:100px;
+        }
+
+        /* 例子8 若子元素总大小大于容器，子元素会被缩小放入容器中 */
+        .wapper8{
+            height:100px;
+            width:500px;
+        }
+        .wapper8 span{
+            width:200px;
+            margin:0 5px;
+        }
+
+        /* 例子9 设置子元素换行 （注：换行后可能会在非排列方向上超出容器） */
+        .wapper9{
+            /* height:100px; */
+            width:500px;
+            flex-wrap:wrap;
+        }
+        .wapper9 span{
+            width:200px;
+            margin:0 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 例子1 row默认排列方向（从左向右） -->
+    <div class="wapper1">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+    </div>
+    
+    <!-- 例子2 row-reverse（效果类似于右浮动） -->
+    <div class="wapper2">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+    </div>
+    
+    <!-- 例子3 column从上到下 -->
+    <div class="wapper3">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+    </div>
+    
+    <!-- 例子4 从容器的终止线开始排列（注意与row-reverse的区别） -->
+    <div class="wapper4">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+    </div>
+
+    <!-- 例子5 在主轴上居中对齐 -->
+    <div class="wapper5">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+    </div>
+
+    <!-- 例子6 子元素平分容器剩余空间 -->
+    <div class="wapper6">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+    </div>
+
+    <!-- 例子7 子元素两边贴边，再平分剩余空间 -->
+    <div class="wapper7">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+    </div>
+
+    <!-- 例子8 若子元素总大小大于容器，子元素会被缩小放入容器中 -->
+    <div class="wapper8">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+    </div>
+
+    <!-- 例子9 设置子元素换行 （注：换行后可能会在非排列方向上超出容器） -->
+    <div class="wapper9">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span>6</span>
+    </div>
+</body>
+</html>

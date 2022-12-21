@@ -1,0 +1,38 @@
+@color:lightblue;
+@font20:20px;
+
+// 子元素的样式直接写到父元素内部
+.wapper1{
+    background:@color;
+    .test1{
+        font-size:@font20;
+    }
+}
+
+// 选择器并列时要加&符号
+.wapper2{
+    a{
+        text-decoration:none;
+        color:green;
+        &:hover{
+            color:@color;
+        }
+    }
+}
+// 如果参与运算的值之间只有一个值有单位，运算结果取该单位
+.wapper3{
+    font-size:@font20;
+    a{
+        font-size:100 / @font20;
+        color:#ccc - #333;
+    }
+    span{
+        font-size:@font20 * 2;
+    }
+    // 如果参与运算的值之间有不同的单位，运算结果的值取靠前的值的单位
+    .bg{
+        background:@color + blue;
+        width:20 * 2px + 10em;
+        height:10 + 2em + (5px - 2);
+    }
+}
