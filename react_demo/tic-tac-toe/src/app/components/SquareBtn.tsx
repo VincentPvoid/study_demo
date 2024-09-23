@@ -7,7 +7,7 @@ export default function SquareBtn(props) {
     posListIndex 步骤记录数组下标，根据单双判断要显示的符号
     clickToSetSymbol 点击格子执行函数
    */
-  const { showVal, boardIndex, posListIndex, clickToSetSymbol } = props;
+  const { showVal, boardIndex, posListIndex, clickToSetSymbol, winCom } = props;
   
   const getDisSymbol = () => {
     if (showVal) {
@@ -17,13 +17,21 @@ export default function SquareBtn(props) {
     
   }
   
-  const clickBoard = () => {
-    clickToSetSymbol(boardIndex)
+  const btnClass = () => {
+    let str = 'square rounded border-2 place-content-center ';
+    if(winCom.length && winCom.includes(boardIndex)){
+      str += "bg-sky-500 text-white"
+    }
+    return str;
   }
+  
+  // const clickBoard = () => {
+  //   clickToSetSymbol(boardIndex)
+  // }
 
   return (
-    <button className="square rounded border-2 place-content-center" 
-      onClick={clickBoard}>
+    <button className={btnClass()} 
+      onClick={() => clickToSetSymbol(boardIndex)}>
       <span>{getDisSymbol()}</span>
     </button>
   )
