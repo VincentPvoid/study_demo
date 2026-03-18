@@ -1,0 +1,264 @@
+{
+  "env": {
+    "OPENROUTER_API_KEY": "OPENROUTER_API_KEY",
+    "NVIDIA_API_KEY": "NVIDIA_API_KEY",
+    "SILICONFLOW_API_KEY": "SILICONFLOW_API_KEY"
+  },
+  "wizard": {
+    "lastRunAt": "2026-03-06T03:19:27.600Z",
+    "lastRunVersion": "2026.3.1",
+    "lastRunCommand": "onboard",
+    "lastRunMode": "local"
+  },
+  "auth": {
+    "profiles": {
+      "openrouter:default": {
+        "provider": "openrouter",
+        "mode": "api_key"
+      }
+    },
+    "order": {
+      "openrouter": [
+        "openrouter:manual",
+        "openrouter:default"
+      ]
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "openrouter": {
+        "baseUrl": "https://openrouter.ai/api/v1",
+        "apiKey": "${OPENROUTER_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "openrouter/free",
+            "name": "openrouter-free",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          }
+        ]
+      },
+      "nvidia": {
+        "baseUrl": "https://integrate.api.nvidia.com/v1",
+        "apiKey": "${NVIDIA_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "minimaxai/minimax-m2.1",
+            "name": "nvidia-minimaxai",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 256000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "meta/llama3-70b-instruct",
+            "name": "nvidia-llama3-70b",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 256000,
+            "maxTokens": 8192
+          }
+        ]
+      },
+      "siliconflow": {
+        "baseUrl": "https://api.siliconflow.cn/v1",
+        "apiKey": "${SILICONFLOW_API_KEY}",
+        "api": "openai-completions",
+        "models": [
+          {
+            "id": "Qwen/Qwen3.5-4B",
+            "name": "Qwen/Qwen3.5-4B",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+            "name": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "THUDM/GLM-4.1V-9B-Thinking",
+            "name": "THUDM/GLM-4.1V-9B-Thinking",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "PaddlePaddle/PaddleOCR-VL",
+            "name": "PaddlePaddle/PaddleOCR-VL",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "internlm/internlm2_5-7b-chat",
+            "name": "internlm/internlm2_5-7b-chat",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          }
+        ]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "openrouter/free",
+        "fallbacks": [
+          "nvidia/meta/llama3-70b-instruct",
+          "nvidia/minimaxai/minimax-m2.1",
+          "siliconflow/Qwen/Qwen3.5-4B",
+          "siliconflow/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+          "siliconflow/THUDM/GLM-4.1V-9B-Thinking",
+          "siliconflow/PaddlePaddle/PaddleOCR-VL",
+          "siliconflow/internlm/internlm2_5-7b-chat"
+        ]
+      },
+      "models": {
+        "openrouter/openrouter/free": { },
+        "nvidia/minimaxai/minimax-m2.1": { }
+      },
+      "workspace": "/root/.openclaw/workspace",
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    }
+  },
+  "messages": {
+    "ackReactionScope": "group-mentions"
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto",
+    "restart": true,
+    "ownerDisplay": "raw"
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "boot-md": {
+          "enabled": true
+        },
+        "bootstrap-extra-files": {
+          "enabled": true
+        },
+        "command-logger": {
+          "enabled": true
+        },
+        "session-memory": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "channels": {
+    "qqbot": {
+      "enabled": true,
+      "allowFrom": [
+        "*"
+      ],
+      "appId": "1903566749",
+      "clientSecret": "KbgaHm492iBRULzR"
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "loopback",
+    "controlUi": {
+      "enabled": true,
+      "allowedOrigins": [
+        "http://192.168.255.233",
+        "http://localhost:8080",
+        "https://192.168.255.233:433"
+      ],
+      "allowInsecureAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "TOKEN"
+    },
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera.snap",
+        "camera.clip",
+        "screen.record",
+        "calendar.add",
+        "contacts.add",
+        "reminders.add"
+      ]
+    }
+  },
+  "plugins": {
+    "allow": [
+      "openclaw-qqbot"
+    ],
+    "entries": {
+      "openclaw-qqbot": {
+        "enabled": true
+      }
+    }
+  }
+}
